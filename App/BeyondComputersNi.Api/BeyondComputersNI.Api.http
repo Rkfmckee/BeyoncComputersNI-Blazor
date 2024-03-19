@@ -1,0 +1,6 @@
+@BeyondComputersNI.Api_HostAddress = http://localhost:5029
+
+GET {{BeyondComputersNI.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
