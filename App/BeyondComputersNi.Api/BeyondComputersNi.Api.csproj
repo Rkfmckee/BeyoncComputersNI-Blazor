@@ -14,4 +14,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BeyondComputersNi.Dal\BeyondComputersNi.Dal.csproj" />
+  </ItemGroup>
+
 </Project>
