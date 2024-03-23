@@ -15,10 +15,11 @@ builder.Services.AddDbContext<BcniDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly, typeof(ComputerService).Assembly);
+
+builder.Services.AddTransient<IDataGenerator, DataGenerator>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IComputerService, ComputerService>();
-
-builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly, typeof(ComputerService).Assembly);
 
 var app = builder.Build();
 
@@ -33,5 +34,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.SeedData();
 
 app.Run();
