@@ -30,15 +30,15 @@ public static class Seed
 
     private static void SeedComputers()
     {
-        SeedEntity(dataGenerator!.GenerateComputers(10));
+        if (EntityHasValues<Computer>()) return;
+
+        dbContext!.Set<Computer>().AddRange(dataGenerator!.GenerateComputers(10));
     }
 
-    private static void SeedEntity<T>(IEnumerable<T> items) where T : Entity
+    private static bool EntityHasValues<T>() where T : Entity
     {
         var existingItems = dbContext!.Set<T>().FirstOrDefault();
 
-        if (existingItems is not null) return;
-
-        dbContext.Set<T>().AddRange(items);
+        return existingItems is not null;
     }
 }
