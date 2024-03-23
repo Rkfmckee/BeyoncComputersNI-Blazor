@@ -6,10 +6,10 @@ using BeyondComputersNi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeyondComputersNi.Services.Services;
-public class ComputerService(IBcniDbContext dbContext, IMapper mapper) : IComputerService
+public class ComputerService(IRepository<Computer> computerRepo, IMapper mapper) : IComputerService
 {
     public Task<List<ComputerDto>> GetAllComputers()
     {
-        return mapper.ProjectTo<ComputerDto>(dbContext.Get<Computer>()).ToListAsync();
+        return mapper.ProjectTo<ComputerDto>(computerRepo.Get()).ToListAsync();
     }
 }
