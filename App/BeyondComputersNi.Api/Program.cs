@@ -1,20 +1,22 @@
 using BeyondComputersNi.Dal.Contexts;
 using BeyondComputersNi.Dal.Interfaces;
+using BeyondComputersNi.Services.Interfaces;
+using BeyondComputersNi.Services.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IBcniDbContext, BcniDbContext>(_ => new BcniDbContext(builder.Configuration.GetConnectionString("DefaultConnection") ?? ""));
+builder.Services.AddScoped<IComputerService, ComputerService>();
+
+builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly, typeof(ComputerService).Assembly);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -1,6 +1,6 @@
 ﻿namespace BeyondComputersNi.Dal.Entities;
 
-public class Computer
+public class Computer : Entity
 {
     public required string Identifier { get; set; }
     public string? Motherboard { get; set; }
