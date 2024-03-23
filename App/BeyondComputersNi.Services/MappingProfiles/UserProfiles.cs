@@ -4,10 +4,11 @@ using BeyondComputersNi.Services.DataTransferObjects;
 
 namespace BeyondComputersNi.Services.MappingProfiles;
 
-public class ComputerDtoProfile : Profile
+public class UserProfiles : Profile
 {
-    public ComputerDtoProfile()
+    public UserProfiles()
     {
-        CreateMap<Computer, ComputerDto>();
+        CreateMap<User, UserDto>()
+            .ReverseMap();
     }
 }

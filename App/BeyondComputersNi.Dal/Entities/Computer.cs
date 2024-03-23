@@ -11,4 +11,7 @@ public class Computer : Entity
     public string? GPU { get; set; }
     public string? PSU { get; set; }
     public string? Case { get; set; }
+
+    public required int UserId { get; set; }
+    public required User User { get; set; }
 }

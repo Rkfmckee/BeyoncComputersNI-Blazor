@@ -24,7 +24,8 @@ public class DataGenerator : IDataGenerator
             .RuleFor(c => c.Storage,     (f, c) => $"{f.Random.Word()} {f.Commerce.ProductName()} {f.Random.Number(100)}TB HDD")
             .RuleFor(c => c.GPU,         (f, c) => $"{f.Random.Word()} {f.Random.Char('A', 'Z')}TX {f.Random.Number(9)}0{f.Random.Number(9)}0")
             .RuleFor(c => c.PSU,         (f, c) => $"{f.Random.Word()} {f.Commerce.ProductName()} {f.Random.Number(1000)}W")
-            .RuleFor(c => c.Case,        (f, c) => $"{f.Random.Word()} {f.Commerce.ProductName()} {f.Music.Genre()}");
+            .RuleFor(c => c.Case,        (f, c) => $"{f.Random.Word()} {f.Commerce.ProductName()} {f.Music.Genre()}")
+            .RuleFor(c => c.UserId,      (f, c) => 1);
     }
 
     public Computer GenerateComputer()

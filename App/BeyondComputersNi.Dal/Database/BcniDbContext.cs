@@ -6,4 +6,5 @@ namespace BeyondComputersNi.Dal.Database;
 public class BcniDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Computer> Computers { get; set; }
+    public DbSet<User> Users { get; set; }
 }

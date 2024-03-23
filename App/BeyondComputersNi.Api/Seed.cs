@@ -32,6 +32,8 @@ public static class Seed
     {
         if (EntityHasValues<Computer>()) return;
 
+        var computers = dataGenerator!.GenerateComputers(10);
+
         dbContext!.Set<Computer>().AddRange(dataGenerator!.GenerateComputers(10));
     }
 

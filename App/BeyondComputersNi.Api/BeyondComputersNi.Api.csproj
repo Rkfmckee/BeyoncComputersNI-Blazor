@@ -19,4 +19,8 @@
     <ProjectReference Include="..\BeyondComputersNi.Services\BeyondComputersNi.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\" />
+  </ItemGroup>
+
 </Project>

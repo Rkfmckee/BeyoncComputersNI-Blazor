@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typ
 builder.Services.AddTransient<IDataGenerator, DataGenerator>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IComputerService, ComputerService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -33,7 +34,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 app.SeedData();
 
