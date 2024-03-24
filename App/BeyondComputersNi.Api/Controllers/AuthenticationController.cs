@@ -9,7 +9,7 @@ namespace BeyondComputersNi.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(IUserService userService, IMapper mapper) : ControllerBase
+public class AuthenticationController(IUserService userService, IAuthenticationService authenticationService, IMapper mapper) : BaseController
 {
     [HttpPost("Register")]
     [AllowAnonymous]
@@ -21,11 +21,24 @@ public class AuthenticationController(IUserService userService, IMapper mapper) 
         if (await userService.UserExistsAsync(registerViewModel.Email))
             return Conflict("User already exists.");
 
-        var successful = await userService.AddUserAsync(mapper.Map<UserDto>(registerViewModel));
+        return CreatedOrError(await userService.AddUserAsync(mapper.Map<UserDto>(registerViewModel)),
+            "User could not be created, please try again.");
+    }
 
-        if (successful)
-            return Created();
-        else
-            return StatusCode(StatusCodes.Status500InternalServerError, "User could not be created, please try again.");
+    [HttpPost("Login")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> Login(LoginViewModel loginViewModel)
+    {
+        var user = await userService.GetUserAsync(loginViewModel.Email);
+
+        if (user == null || !userService.PasswordIsCorrect(user, loginViewModel.Password))
+            return Unauthorized();
+
+        return OkOrError(
+            mapper.Map<AuthenticationViewModel>(authenticationService.Authenticate(user.Email)),
+            "User could not be logged in, please try again.");
     }
 }

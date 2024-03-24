@@ -4,6 +4,7 @@ using BeyondComputersNi.Dal.Interfaces;
 using BeyondComputersNi.Services.DataTransferObjects;
 using BeyondComputersNi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using BC = BCrypt.Net.BCrypt;
 
 namespace BeyondComputersNi.Services.Services;
 
@@ -16,12 +17,21 @@ public class UserService(IRepository<User> userRepo, IMapper mapper) : IUserServ
 
     public Task<List<UserDto>> GetAllUsersAsync()
     {
-        throw new NotImplementedException();
+        return mapper.ProjectTo<UserDto>(userRepo.Get())
+            .ToListAsync();
     }
 
-    public Task<UserDto> GetUserAsync(string email)
+    public Task<UserDto?> GetUserAsync(string email)
     {
-        throw new NotImplementedException();
+        return mapper.ProjectTo<UserDto>(userRepo.Get())
+            .SingleOrDefaultAsync(u => u.Email == email);
+    }
+
+    public bool PasswordIsCorrect(UserDto? user, string passwordAttempt)
+    {
+        if (user == null || string.IsNullOrEmpty(passwordAttempt)) return false;
+
+        return BC.Verify(passwordAttempt, user.Password);
     }
 
     public async Task<bool> AddUserAsync(UserDto userDto)

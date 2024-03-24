@@ -17,6 +17,6 @@ public class UserProfiles : Profile
 
             .ReverseMap()
                 .ForMember(dest => dest.Password,
-                opt => opt.Ignore());
+                opt => opt.MapFrom(src => src.PasswordHash));
     }
 }
