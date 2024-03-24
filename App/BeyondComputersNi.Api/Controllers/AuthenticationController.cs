@@ -2,6 +2,7 @@
 using BeyondComputersNi.Api.ViewModels.Authentication;
 using BeyondComputersNi.Services.DataTransferObjects;
 using BeyondComputersNi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeyondComputersNi.Api.Controllers;
@@ -11,6 +12,7 @@ namespace BeyondComputersNi.Api.Controllers;
 public class AuthenticationController(IUserService userService, IMapper mapper) : ControllerBase
 {
     [HttpPost("Register")]
+    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

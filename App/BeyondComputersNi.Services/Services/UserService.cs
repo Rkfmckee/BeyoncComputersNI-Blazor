@@ -4,7 +4,6 @@ using BeyondComputersNi.Dal.Interfaces;
 using BeyondComputersNi.Services.DataTransferObjects;
 using BeyondComputersNi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using BC = BCrypt.Net.BCrypt;
 
 namespace BeyondComputersNi.Services.Services;
 
@@ -27,12 +26,12 @@ public class UserService(IRepository<User> userRepo, IMapper mapper) : IUserServ
 
     public async Task<bool> AddUserAsync(UserDto userDto)
     {
-        userDto.Password = BC.HashPassword(userDto.Password);
-
         var user = mapper.Map<User>(userDto);
         await userRepo.AddAsync(user);
 
-        return true;
+        var success = await userRepo.SaveChangesAsync() > 0;
+
+        return success;
     }
 
     public Task DeleteUserAsync(UserDto userDto)
