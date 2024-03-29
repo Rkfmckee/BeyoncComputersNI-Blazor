@@ -1,6 +1,6 @@
 ﻿@attribute [Route(PageUrl)]
 
-<EditForm Model="@LoginViewModel" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+<EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
     <DataAnnotationsValidator />
 
     <MudGrid Justify="Justify.Center">
@@ -17,7 +17,7 @@
 
                 <PasswordField @bind-Value="LoginViewModel.Password" For="@(() => LoginViewModel!.Password)" Class="mt-2" />
 
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6" Disabled="@HasErrors">
                     Login
                 </MudButton>
             </MudPaper>
