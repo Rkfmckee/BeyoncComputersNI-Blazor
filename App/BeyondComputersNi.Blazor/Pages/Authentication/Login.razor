@@ -1,5 +1,4 @@
-﻿@using System.ComponentModel.DataAnnotations
-@attribute [Route(PageUrl)]
+﻿@attribute [Route(PageUrl)]
 
 <EditForm Model="@LoginViewModel" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
     <DataAnnotationsValidator />
@@ -11,20 +10,12 @@
 
                 @if (HasErrors)
                 {
-                    <MudPaper Class="pa-4 mud-height-full">
-                        <MudText Typo="Typo.subtitle2">Please correct the following errors:</MudText>
-
-                        <MudText Color="@Color.Error">
-                            <ValidationSummary />
-                        </MudText>
-                    </MudPaper>
+                    <FormValidationErrors />
                 }
 
-                <MudTextField @bind-Value="LoginViewModel.Email" For="@(() => LoginViewModel.Email)" Label="Email address" Class="mt-2" />
+                <MudTextField @bind-Value="LoginViewModel!.Email" For="@(() => LoginViewModel!.Email)" Label="Email address" Class="mt-2" />
 
-                <MudTextField @bind-Value="LoginViewModel.Password" For="@(() => LoginViewModel.Password)" Label="Password" Class="mt-2"
-                    InputType="@PasswordInputType" Adornment="Adornment.End" AdornmentIcon="@PasswordVisibilityIcon" 
-                    OnAdornmentClick="@TogglePasswordVisibility" AdornmentAriaLabel="Show Password" />
+                <PasswordField @bind-Value="LoginViewModel.Password" For="@(() => LoginViewModel!.Password)" Class="mt-2" />
 
                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
                     Login
