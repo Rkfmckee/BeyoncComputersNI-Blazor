@@ -15,14 +15,15 @@ public partial class Login : IDisposable
     {
         LoginViewModel = new LoginViewModel();
         EditContext = new EditContext(LoginViewModel);
-        EditContext.OnFieldChanged += HandleFieldChanged;
+        EditContext.OnValidationStateChanged += HandleValidationStateChanged;
     }
 
-    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
     {
         if (EditContext is null) return;
 
-        HasErrors = !EditContext.Validate();
+        HasErrors = EditContext?.GetValidationMessages().Any() ?? false;
+        StateHasChanged();
     }
 
     private void OnValidSubmit(EditContext context)
@@ -41,6 +42,6 @@ public partial class Login : IDisposable
     {
         if (EditContext is null) return;
 
-        EditContext.OnFieldChanged -= HandleFieldChanged;
+        EditContext.OnValidationStateChanged -= HandleValidationStateChanged;
     }
 }
