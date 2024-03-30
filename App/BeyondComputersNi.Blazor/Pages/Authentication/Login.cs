@@ -1,4 +1,6 @@
-﻿using BeyondComputersNi.Blazor.ViewModels;
+﻿using BeyondComputersNi.Blazor.Interfaces;
+using BeyondComputersNi.Blazor.ViewModels;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace BeyondComputersNi.Blazor.Pages.Authentication;
@@ -7,9 +9,14 @@ public partial class Login : IDisposable
 {
     public const string PageUrl = "/Login";
 
+    [Inject]
+    private IAuthenticationService AuthenticationService { get; set; }
+
     private LoginViewModel? LoginViewModel { get; set; }
     private EditContext? EditContext { get; set; }
     private bool HasErrors { get; set; }
+    private string? LoginErrorMessage { get; set; }
+    private string? LoginSuccessMessage { get; set; }
 
     protected override void OnInitialized()
     {
@@ -26,9 +33,23 @@ public partial class Login : IDisposable
         StateHasChanged();
     }
 
-    private void OnValidSubmit(EditContext context)
+    private async void OnValidSubmit(EditContext context)
     {
+        if (LoginViewModel is null) return;
         HasErrors = false;
+        LoginErrorMessage = null;
+        LoginSuccessMessage = null;
+
+        try
+        {
+            await AuthenticationService.LoginAsync(LoginViewModel);
+            LoginSuccessMessage = "Login successful";
+        }
+        catch (Exception ex)
+        {
+            LoginErrorMessage = ex.Message;
+        }
+
         StateHasChanged();
     }
 

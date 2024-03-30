@@ -58,6 +58,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddCors();
+
 builder.Services.AddDbContext<BcniDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -80,6 +82,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+app.UseCors(options =>
+{
+    options.AllowAnyHeader()
+           .AllowAnyMethod()
+           .AllowAnyOrigin();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
