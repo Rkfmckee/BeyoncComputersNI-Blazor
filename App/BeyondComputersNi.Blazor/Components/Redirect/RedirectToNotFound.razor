@@ -1,0 +1,11 @@
+﻿<MudText Typo="Typo.body1" Align="Align.Center">Redirecting...</MudText>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo("/NotFound", true);
+    }
+}
