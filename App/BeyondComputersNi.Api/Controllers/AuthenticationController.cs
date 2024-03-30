@@ -12,7 +12,6 @@ namespace BeyondComputersNi.Api.Controllers;
 public class AuthenticationController(IUserService userService, IAuthenticationService authenticationService, IMapper mapper) : BaseController
 {
     [HttpPost("Register")]
-    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -26,7 +25,6 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
     }
 
     [HttpPost("Login")]
-    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -38,7 +36,28 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
             return Unauthorized();
 
         return OkOrError(
-            mapper.Map<AuthenticationViewModel>(authenticationService.Authenticate(user.Email)),
+            mapper.Map<AuthenticationViewModel>(await authenticationService.AuthenticateAsync(user.Email)),
             "User could not be logged in, please try again.");
+    }
+
+    [HttpPost("Refresh")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> Refresh(RefreshViewModel refreshViewModel)
+    {
+        return OkOrError(
+            mapper.Map<AuthenticationViewModel>(await authenticationService.RefreshAsync(mapper.Map<RefreshDto>(refreshViewModel))),
+            "User could not be refeshed, please try again.");
+    }
+
+    [HttpDelete("Refresh/Revoke")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> Revoke()
+    {
+        return OkOrError(await authenticationService.RevokeAsync());
     }
 }

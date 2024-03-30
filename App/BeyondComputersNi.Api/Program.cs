@@ -54,7 +54,9 @@ builder.Services.AddAuthentication(options =>
             ValidAudience = builder.Configuration["Jwt:ValidAudience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                                builder.Configuration["Jwt:AuthSecret"] ??
-                               throw new InvalidOperationException("Secret not configured")))
+                               throw new InvalidOperationException("Secret not configured"))),
+            ValidateLifetime = true,
+            ClockSkew = new TimeSpan(0, 0, 5)
         };
     });
 
@@ -66,6 +68,8 @@ builder.Services.AddDbContext<BcniDbContext>(options =>
 });
 
 builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly, typeof(ComputerService).Assembly);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<IDataGenerator, DataGenerator>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -94,7 +98,7 @@ app.UseCors(options =>
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers().RequireAuthorization();
+app.MapControllers();
 
 app.SeedData();
 

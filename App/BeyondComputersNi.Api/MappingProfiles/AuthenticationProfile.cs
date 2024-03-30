@@ -9,5 +9,6 @@ public class AuthenticationProfile : Profile
     public AuthenticationProfile()
     {
         CreateMap<AuthenticationDto, AuthenticationViewModel>();
+        CreateMap<RefreshViewModel, RefreshDto>();
     }
 }
