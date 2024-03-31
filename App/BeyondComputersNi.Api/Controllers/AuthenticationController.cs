@@ -35,9 +35,9 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
         if (user == null || !userService.PasswordIsCorrect(user, loginViewModel.Password))
             return Unauthorized("Invalid credentials.");
 
-        return OkOrError(
+        return OkOrUnauthorized(
             mapper.Map<AuthenticationViewModel>(await authenticationService.AuthenticateAsync(user.Email)),
-            "User could not be logged in, please try again.");
+            "Login failed, please try again.");
     }
 
     [HttpPost("Refresh")]
@@ -46,12 +46,12 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Refresh(RefreshViewModel refreshViewModel)
     {
-        return OkOrError(
+        return OkOrUnauthorized(
             mapper.Map<AuthenticationViewModel>(await authenticationService.RefreshAsync(mapper.Map<RefreshDto>(refreshViewModel))),
-            "User could not be refeshed, please try again.");
+            "Refresh failed, please try again.");
     }
 
-    [HttpDelete("Refresh/Revoke")]
+    [HttpDelete("Revoke")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]

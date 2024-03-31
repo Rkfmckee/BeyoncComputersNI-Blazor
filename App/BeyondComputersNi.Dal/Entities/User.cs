@@ -6,7 +6,6 @@ public class User : Entity
     public required string PasswordHash { get; set; }
     public string? Name { get; set; }
     public string? RefreshToken { get; set; }
-    public DateTime? RefreshTokenExpiry { get; set; }
 
     public List<Computer>? Computers { get; set; }
 }

@@ -2,17 +2,15 @@
 using BeyondComputersNi.Dal.Interfaces;
 using BeyondComputersNi.Services.DataTransferObjects;
 using BeyondComputersNi.Services.Interfaces;
+using BeyondComputersNi.Shared.Enums;
 using BeyondComputersNi.Shared.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using System.Web.Http;
 
 namespace BeyondComputersNi.Services.Services;
 
@@ -24,25 +22,24 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
         if (user is null)
         {
             user = await userRepository.Get().SingleOrDefaultAsync(u => u.Email == email);
-            if (user is null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (user is null) return null;
         }
 
-        var authToken = GenerateAuthToken(email);
+        var authToken = GenerateToken(email, TokenType.Auth);
+        var authTokenString = new JwtSecurityTokenHandler().WriteToken(authToken);
 
-        var refreshToken = GenerateRefreshToken();
-        var refreshTokenExpiry = DateTime.UtcNow.AddMinutes(int.Parse(configuration["Jwt:RefreshExpiryMinutes"]
-                     ?? throw new InvalidOperationException("Expiry time not configured")));
+        var refreshToken = GenerateToken(email, TokenType.Refresh);
+        var refreshTokenString = new JwtSecurityTokenHandler().WriteToken(refreshToken);
 
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiry = refreshTokenExpiry;
+        user.RefreshToken = refreshTokenString;
         await userRepository.SaveChangesAsync();
 
         return new AuthenticationDto
         {
-            AuthToken = new JwtSecurityTokenHandler().WriteToken(authToken),
+            AuthToken = authTokenString,
             AuthExpiration = authToken.ValidTo,
-            RefreshToken = refreshToken,
-            RefreshExpiration = refreshTokenExpiry
+            RefreshToken = refreshTokenString,
+            RefreshExpiration = refreshToken.ValidTo
         };
     }
 
@@ -51,11 +48,18 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
         var principal = GetClaimsPrincipalFromExpiredToken(refreshDto.AuthToken);
         var email = principal?.GetEmail();
 
-        if (email is null) throw new HttpResponseException(HttpStatusCode.Unauthorized);
+        if (email is null) return null;
+
+        var authToken = new JwtSecurityTokenHandler().ReadJwtToken(refreshDto.AuthToken);
+        var refreshToken = new JwtSecurityTokenHandler().ReadJwtToken(refreshDto.RefreshToken);
 
         var user = await userRepository.Get().SingleOrDefaultAsync(u => u.Email == email);
-        if (user is null || user.RefreshToken != refreshDto.RefreshToken || user.RefreshTokenExpiry < DateTime.UtcNow)
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+        if (user is null || 
+            user.RefreshToken != refreshDto.RefreshToken ||
+            refreshToken.ValidTo < DateTime.UtcNow ||
+            authToken.ValidTo > DateTime.UtcNow)
+            return null;
 
         return await AuthenticateAsync(email, user);
     }
@@ -63,45 +67,43 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
     public async Task<bool> RevokeAsync()
     {
         var email = httpContextAccessor.HttpContext.User.GetEmail();
-        if (email is null) throw new HttpResponseException(HttpStatusCode.Unauthorized);
+        if (email is null) return false;
 
         var user = await userRepository.Get().SingleOrDefaultAsync(u => u.Email == email);
-        if (user is null) throw new HttpResponseException(HttpStatusCode.NotFound);
+        if (user is null) return false;
 
         user.RefreshToken = null;
-        user.RefreshTokenExpiry = null;
 
         await userRepository.SaveChangesAsync();
         return true;
     }
 
-    private JwtSecurityToken GenerateAuthToken(string email)
+    private JwtSecurityToken GenerateToken(string email, TokenType tokenType)
     {
+        var secretKey = (tokenType == TokenType.Auth ?
+            configuration["Jwt:AuthSecret"] :
+            configuration["Jwt:RefreshSecret"]) ??
+            throw new InvalidOperationException("Secret not configured");
+
+        var expiryTime = tokenType == TokenType.Auth ?
+            configuration["Jwt:AuthExpiryMinutes"] :
+            configuration["Jwt:RefreshExpiryMinutes"] ??
+             throw new InvalidOperationException("Expiry time not configured");
+
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Email, email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            configuration["Jwt:AuthSecret"] ?? throw new InvalidOperationException("Secret not configured")));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
 
         return new JwtSecurityToken(
             issuer: configuration["Jwt:ValidIssuer"],
             audience: configuration["Jwt:ValidAudience"],
-            expires: DateTime.UtcNow.AddMinutes(int.Parse(configuration["Jwt:AuthExpiryMinutes"]
-                     ?? throw new InvalidOperationException("Expiry time not configured"))),
+            expires: DateTime.UtcNow.AddMinutes(int.Parse(expiryTime!)),
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
             claims: claims);
-    }
-
-    private string GenerateRefreshToken()
-    {
-        using var randomNumberGenerator = RandomNumberGenerator.Create();
-        var randomNumber = new byte[64];
-
-        randomNumberGenerator.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
     }
 
     private ClaimsPrincipal? GetClaimsPrincipalFromExpiredToken(string token)
