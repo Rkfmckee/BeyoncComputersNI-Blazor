@@ -58,7 +58,7 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
         LoginChanged?.Invoke(null);
     }
 
-    public async Task RefreshAsync()
+    public async Task<bool> RefreshAsync()
     {
         var authToken = await GetAuthTokenAsync();
         var refreshToken = await GetRefreshTokenAsync();
@@ -71,10 +71,17 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
             RefreshToken = refreshToken
         };
 
-        var authenticationViewModel = await PostAsync<AuthenticationViewModel>("api/authentication/refresh", refreshViewModel);
-        if (authenticationViewModel is null) await LogoutAsync();
+        try
+        {
+            var authenticationViewModel = await PostAsync<AuthenticationViewModel>("api/authentication/refresh", refreshViewModel);
+            await SetTokens(authenticationViewModel);
 
-        await SetTokens(authenticationViewModel!);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     private async Task SetTokens(AuthenticationViewModel authenticationViewModel)

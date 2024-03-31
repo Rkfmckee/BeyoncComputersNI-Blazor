@@ -8,5 +8,5 @@ public interface IAuthenticationService
     ValueTask<string?> GetRefreshTokenAsync();
     Task<DateTime> LoginAsync(LoginViewModel login);
     Task LogoutAsync();
-    Task RefreshAsync();
+    Task<bool> RefreshAsync();
 }

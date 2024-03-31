@@ -1,4 +1,4 @@
-﻿@using BeyondComputersNi.Blazor.Pages.Status
+﻿@using BeyondComputersNi.Blazor.Pages.Authentication
 <MudText Typo="Typo.body1" Align="Align.Center">Redirecting...</MudText>
 
 @code {
@@ -7,6 +7,6 @@
 
     protected override void OnInitialized()
     {
-        NavigationManager.NavigateTo(NotFound.PageUrl);
+        NavigationManager.NavigateTo(Login.PageUrl, true);
     }
 }

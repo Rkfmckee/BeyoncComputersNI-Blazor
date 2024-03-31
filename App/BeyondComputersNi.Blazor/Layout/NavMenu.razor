@@ -1,9 +1,10 @@
 ﻿@using BeyondComputersNi.Blazor.Pages.Authentication
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
-    <MudNavGroup Title="Settings" Expanded="true">
-        <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
-        <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
-    </MudNavGroup>
     <MudNavLink Href="@Login.PageUrl" Match="NavLinkMatch.Prefix">Login</MudNavLink>
+    <MudNavLink Href="@Logout.PageUrl" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
+    <MudNavGroup Title="Testing" Expanded="true">
+        <MudNavLink Href="/auth" Match="NavLinkMatch.Prefix">Test authentication</MudNavLink>
+        <MudNavLink Href="/test" Match="NavLinkMatch.Prefix">Doesn't exist</MudNavLink>
+    </MudNavGroup>
 </MudNavMenu>

@@ -3,6 +3,7 @@ using BeyondComputersNi.Blazor.Authentication;
 using BeyondComputersNi.Blazor.Interfaces;
 using BeyondComputersNi.Blazor.Services;
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
@@ -27,6 +28,9 @@ builder.Services.AddHttpClient(builder.Configuration["Api:HttpClient"] ?? "")
     .AddHttpMessageHandler<AuthenticationHandler>();
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();
+
+builder.Services.AddScoped<AuthenticationStateProvider, BcniAuthenticationStateProvider>();
+builder.Services.AddAuthorizationCore();
 
 builder.Services.AddTransient<AuthenticationHandler>();
 builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
