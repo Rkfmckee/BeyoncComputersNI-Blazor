@@ -35,6 +35,7 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
 
     public async Task LogoutAsync()
     {
+        await DeleteAsync("api/authentication/refresh/revoke");
         await localStorage.RemoveItemAsync(AuthKey);
         authTokenCache = null;
 

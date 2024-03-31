@@ -1,4 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces;
+using BeyondComputersNi.Blazor.Pages.Status;
 using BeyondComputersNi.Blazor.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -10,8 +11,14 @@ public partial class Login : IDisposable
 {
     public const string PageUrl = "/Login";
 
+    [SupplyParameterFromQuery]
+    private bool LoggedOut { get; set; }
+
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; }
+
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
 
     [Inject]
     private ISnackbar Snackbar { get; set; }
@@ -22,6 +29,8 @@ public partial class Login : IDisposable
 
     protected override void OnInitialized()
     {
+        if (AuthenticationService is null) NavigationManager!.NavigateTo(Error.PageUrl);
+
         LoginViewModel = new LoginViewModel();
         EditContext = new EditContext(LoginViewModel);
         EditContext.OnValidationStateChanged += HandleValidationStateChanged;
@@ -43,6 +52,7 @@ public partial class Login : IDisposable
         try
         {
             await AuthenticationService.LoginAsync(LoginViewModel);
+            NavigationManager!.NavigateTo(Home.PageUrl);
             Snackbar.Add("Login successful", Severity.Success);
         }
         catch (Exception ex)

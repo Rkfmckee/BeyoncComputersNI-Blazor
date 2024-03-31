@@ -1,5 +1,33 @@
-﻿<h3>Logout</h3>
+﻿@using BeyondComputersNi.Blazor.Pages.Status
+@attribute [Route(PageUrl)]
+
+<MudText Typo="Typo.body1" Align="Align.Center">Logging out...</MudText>
 
 @code {
+    public const string PageUrl = "/Logout";
 
+    [Inject]
+    private IAuthenticationService? AuthenticationService { get; set; }
+
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationService is null) NavigationManager!.NavigateTo(Error.PageUrl);
+
+        try
+        {
+            await AuthenticationService!.LogoutAsync();
+            Snackbar.Add("Logged out successfully", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+        }
+
+        NavigationManager!.NavigateTo(Login.PageUrl);
+    }
 }
