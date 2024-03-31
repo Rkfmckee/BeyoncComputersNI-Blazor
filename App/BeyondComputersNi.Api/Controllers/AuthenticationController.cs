@@ -52,7 +52,6 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
     }
 
     [HttpDelete("Revoke")]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
