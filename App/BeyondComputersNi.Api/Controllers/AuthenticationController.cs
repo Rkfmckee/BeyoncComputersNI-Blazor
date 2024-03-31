@@ -33,7 +33,7 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
         var user = await userService.GetUserAsync(loginViewModel.Email);
 
         if (user == null || !userService.PasswordIsCorrect(user, loginViewModel.Password))
-            return Unauthorized();
+            return Unauthorized("Invalid credentials.");
 
         return OkOrError(
             mapper.Map<AuthenticationViewModel>(await authenticationService.AuthenticateAsync(user.Email)),

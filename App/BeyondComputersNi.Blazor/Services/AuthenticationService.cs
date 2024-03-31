@@ -2,13 +2,12 @@
 using BeyondComputersNi.Blazor.ViewModels;
 using Blazored.LocalStorage;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Json;
 using System.Security.Claims;
 
 namespace BeyondComputersNi.Blazor.Services;
 
 public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfiguration configuration,
-    ILocalStorageService localStorage) : IAuthenticationService
+    ILocalStorageService localStorage) : BaseService(httpClientFactory, configuration), IAuthenticationService
 {
     private const string AuthKey = nameof(AuthKey);
     private string? authTokenCache;
@@ -25,17 +24,13 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
 
     public async Task<DateTime> LoginAsync(LoginViewModel login)
     {
-        var response = await httpClientFactory.CreateClient(configuration["Api:HttpClient"] ?? "").PostAsync("api/authentication/login", JsonContent.Create(login));
-        if (!response.IsSuccessStatusCode) throw new UnauthorizedAccessException(response.StatusCode.ToString());
+        var authenticationViewModel = await PostAsync<AuthenticationViewModel>("api/authentication/login", login);
 
-        var content = await response.Content.ReadFromJsonAsync<AuthenticationViewModel>();
-        if (content is null) throw new InvalidDataException();
+        await localStorage.SetItemAsync(AuthKey, authenticationViewModel.AuthToken);
 
-        await localStorage.SetItemAsync(AuthKey, content.AuthToken);
+        LoginChanged?.Invoke(GetEmail(authenticationViewModel.AuthToken));
 
-        LoginChanged?.Invoke(GetEmail(content.AuthToken));
-
-        return content.AuthExpiration;
+        return authenticationViewModel.AuthExpiration;
     }
 
     public async Task LogoutAsync()

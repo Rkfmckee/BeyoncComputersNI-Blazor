@@ -2,6 +2,7 @@
 using BeyondComputersNi.Blazor.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using MudBlazor;
 
 namespace BeyondComputersNi.Blazor.Pages.Authentication;
 
@@ -12,11 +13,12 @@ public partial class Login : IDisposable
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; }
 
+    [Inject]
+    private ISnackbar Snackbar { get; set; }
+
     private LoginViewModel? LoginViewModel { get; set; }
     private EditContext? EditContext { get; set; }
     private bool HasErrors { get; set; }
-    private string? LoginErrorMessage { get; set; }
-    private string? LoginSuccessMessage { get; set; }
 
     protected override void OnInitialized()
     {
@@ -37,17 +39,15 @@ public partial class Login : IDisposable
     {
         if (LoginViewModel is null) return;
         HasErrors = false;
-        LoginErrorMessage = null;
-        LoginSuccessMessage = null;
 
         try
         {
             await AuthenticationService.LoginAsync(LoginViewModel);
-            LoginSuccessMessage = "Login successful";
+            Snackbar.Add("Login successful", Severity.Success);
         }
         catch (Exception ex)
         {
-            LoginErrorMessage = ex.Message;
+            Snackbar.Add(ex.Message, Severity.Error);
         }
 
         StateHasChanged();
