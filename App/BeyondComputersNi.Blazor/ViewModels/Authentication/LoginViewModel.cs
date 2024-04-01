@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BeyondComputersNi.Blazor.ViewModels;
+namespace BeyondComputersNi.Blazor.ViewModels.Authentication;
 
 public class LoginViewModel
 {

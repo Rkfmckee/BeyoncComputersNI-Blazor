@@ -1,3 +1,10 @@
 ﻿@using BeyondComputersNi.Blazor.Pages.Authentication
 
-<RedirectTo PageUrl="@Login.PageUrl" />
+<RedirectTo PageUrl="@LoginUrl" />
+
+@code {
+    [Parameter]
+    public bool NeedAuth { get; set; }
+
+    public string LoginUrl => NeedAuth ? $"{Login.PageUrl}?needAuth=true" : Login.PageUrl;
+}

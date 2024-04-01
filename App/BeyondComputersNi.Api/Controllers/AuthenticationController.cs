@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using BeyondComputersNi.Api.ViewModels.Authentication;
 using BeyondComputersNi.Services.DataTransferObjects;
+using BeyondComputersNi.Services.DataTransferObjects.Authentication;
 using BeyondComputersNi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BeyondComputersNi.Api.Controllers;
 
@@ -51,7 +54,6 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
     }
 
     [HttpDelete("Revoke")]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Revoke()

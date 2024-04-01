@@ -1,6 +1,8 @@
 using BeyondComputersNi.Blazor;
 using BeyondComputersNi.Blazor.Authentication;
+using BeyondComputersNi.Blazor.Interfaces;
 using BeyondComputersNi.Blazor.Interfaces.Authentication;
+using BeyondComputersNi.Blazor.Services;
 using BeyondComputersNi.Blazor.Services.Authentication;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -36,5 +38,6 @@ builder.Services.AddTransient<AuthenticationHandler>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IRefreshService, RefreshService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IComputerService, ComputerService>();
 
 await builder.Build().RunAsync();

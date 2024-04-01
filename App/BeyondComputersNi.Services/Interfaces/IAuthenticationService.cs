@@ -1,5 +1,5 @@
 ﻿using BeyondComputersNi.Dal.Entities;
-using BeyondComputersNi.Services.DataTransferObjects;
+using BeyondComputersNi.Services.DataTransferObjects.Authentication;
 
 namespace BeyondComputersNi.Services.Interfaces;
 

@@ -1,6 +1,6 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
 using BeyondComputersNi.Blazor.Pages.Status;
-using BeyondComputersNi.Blazor.ViewModels;
+using BeyondComputersNi.Blazor.ViewModels.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
@@ -12,7 +12,7 @@ public partial class Login : IDisposable
     public const string PageUrl = "/Login";
 
     [SupplyParameterFromQuery]
-    private bool LoggedOut { get; set; }
+    private bool NeedAuth { get; set; }
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; }
@@ -30,6 +30,7 @@ public partial class Login : IDisposable
     protected override void OnInitialized()
     {
         if (AuthenticationService is null) NavigationManager!.NavigateTo(Error.PageUrl);
+        if (NeedAuth) Snackbar.Add("You need to log in to continue", Severity.Info);
 
         LoginViewModel = new LoginViewModel();
         EditContext = new EditContext(LoginViewModel);

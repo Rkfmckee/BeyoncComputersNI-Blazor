@@ -6,6 +6,17 @@ public class BaseService(IHttpClientFactory httpClientFactory, IConfiguration co
 {
     private HttpClient httpClient => httpClientFactory.CreateClient(configuration["Api:HttpClient"] ?? "");
 
+    protected async Task<T> GetAsync<T>(string url)
+    {
+        var response = await httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
+
+        var content = await response.Content.ReadFromJsonAsync<T>();
+        if (content is null) throw new InvalidDataException();
+
+        return content;
+    }
+
     protected async Task<T> PostAsync<T>(string url, object requestBody)
     {
         var response = await httpClient.PostAsync(url, JsonContent.Create(requestBody));

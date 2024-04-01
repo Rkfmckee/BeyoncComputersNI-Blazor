@@ -6,7 +6,7 @@
                     <MudText Typo="Typo.body1" Align="Align.Center">Authorizing...</MudText>
                 </Authorizing>
                 <NotAuthorized>
-                    <RedirectToLogin />
+                    <RedirectToLogin NeedAuth=true />
                 </NotAuthorized>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />

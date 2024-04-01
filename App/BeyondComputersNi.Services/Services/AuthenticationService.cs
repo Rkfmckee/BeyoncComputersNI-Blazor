@@ -1,6 +1,6 @@
 ﻿using BeyondComputersNi.Dal.Entities;
 using BeyondComputersNi.Dal.Interfaces;
-using BeyondComputersNi.Services.DataTransferObjects;
+using BeyondComputersNi.Services.DataTransferObjects.Authentication;
 using BeyondComputersNi.Services.Interfaces;
 using BeyondComputersNi.Shared.Enums;
 using BeyondComputersNi.Shared.Extensions;

@@ -1,5 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
-using BeyondComputersNi.Blazor.ViewModels;
+using BeyondComputersNi.Blazor.ViewModels.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BeyondComputersNi.Blazor.Services.Authentication;
@@ -18,7 +18,14 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
 
     public async Task LogoutAsync()
     {
-        await DeleteAsync("api/authentication/revoke");
+        try
+        {
+            await DeleteAsync("api/authentication/revoke");
+        }
+        catch (Exception)
+        {
+        }
+
         await tokenService.RemoveTokensAsync();
         await authenticationStateProvider.GetAuthenticationStateAsync();
     }

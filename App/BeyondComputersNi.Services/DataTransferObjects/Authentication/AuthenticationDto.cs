@@ -1,4 +1,4 @@
-﻿namespace BeyondComputersNi.Services.DataTransferObjects;
+﻿namespace BeyondComputersNi.Services.DataTransferObjects.Authentication;
 
 public class AuthenticationDto
 {
