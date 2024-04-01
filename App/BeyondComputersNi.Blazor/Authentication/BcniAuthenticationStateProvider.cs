@@ -1,17 +1,21 @@
-﻿using BeyondComputersNi.Blazor.Interfaces;
+﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
+using BeyondComputersNi.Blazor.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
+using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Json;
+using System.Net.Http;
 using System.Security.Claims;
 
 namespace BeyondComputersNi.Blazor.Authentication;
 
-public class BcniAuthenticationStateProvider(IAuthenticationService authenticationService) : AuthenticationStateProvider
+public class BcniAuthenticationStateProvider(ITokenService tokenService, IRefreshService refreshService) : AuthenticationStateProvider
 {
     private JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
     public async override Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var authTokenString = await authenticationService.GetAuthTokenAsync();
+        var authTokenString = await tokenService.GetAuthTokenAsync();
 
         if (TokenIsEmpty(authTokenString))
             return Unauthorized();
@@ -22,14 +26,14 @@ public class BcniAuthenticationStateProvider(IAuthenticationService authenticati
             return Unauthorized();
 
         if (TokenIsExpired(authToken))
-            return await RefreshExpiredToken();
+            return await RefreshExpiredToken(authTokenString!);
 
         return Authorized(authToken);
     }
 
-    private async Task<AuthenticationState> RefreshExpiredToken()
+    private async Task<AuthenticationState> RefreshExpiredToken(string authTokenString)
     {
-        var refreshTokenString = await authenticationService.GetRefreshTokenAsync();
+        var refreshTokenString = await tokenService.GetRefreshTokenAsync();
 
         if (TokenIsEmpty(refreshTokenString))
             return Unauthorized();
@@ -42,12 +46,14 @@ public class BcniAuthenticationStateProvider(IAuthenticationService authenticati
         if (TokenIsExpired(refreshToken))
             return Unauthorized();
 
-        var refreshSucceeded = await authenticationService.RefreshAsync();
+        var refreshedTokens = await refreshService.RefreshAsync(authTokenString, refreshTokenString!);
 
-        if (!refreshSucceeded)
+        if (refreshedTokens is null)
             return Unauthorized();
 
-        return Authorized(tokenHandler.ReadJwtToken(await authenticationService.GetAuthTokenAsync()));
+        await tokenService.SetTokensAsync(refreshedTokens);
+
+        return Authorized(tokenHandler.ReadJwtToken(await tokenService.GetAuthTokenAsync()));
     }
 
     private bool TokenIsEmpty(string? token)

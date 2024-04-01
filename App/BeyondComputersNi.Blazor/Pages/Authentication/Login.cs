@@ -1,4 +1,4 @@
-﻿using BeyondComputersNi.Blazor.Interfaces;
+﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
 using BeyondComputersNi.Blazor.Pages.Status;
 using BeyondComputersNi.Blazor.ViewModels;
 using Microsoft.AspNetCore.Components;
