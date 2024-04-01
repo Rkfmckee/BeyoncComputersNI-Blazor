@@ -1,10 +1,6 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
-using BeyondComputersNi.Blazor.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Json;
-using System.Net.Http;
 using System.Security.Claims;
 
 namespace BeyondComputersNi.Blazor.Authentication;
