@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using BeyondComputersNi.Api.ViewModels.Authentication;
 using BeyondComputersNi.Services.DataTransferObjects;
 using BeyondComputersNi.Services.DataTransferObjects.Authentication;
 using BeyondComputersNi.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+using BeyondComputersNi.Shared.ViewModels.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BeyondComputersNi.Api.Controllers;
 
@@ -22,7 +20,9 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
         if (await userService.UserExistsAsync(registerViewModel.Email))
             return Conflict("User already exists.");
 
-        return CreatedOrError(await userService.AddUserAsync(mapper.Map<UserDto>(registerViewModel)),
+        return CreatedOrError(
+            await userService.AddUserAsync(
+                mapper.Map<UserDto>(registerViewModel)),
             "User could not be created, please try again.");
     }
 
@@ -38,7 +38,8 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
             return Unauthorized("Invalid credentials.");
 
         return OkOrUnauthorized(
-            mapper.Map<AuthenticationViewModel>(await authenticationService.AuthenticateAsync(user.Email)),
+            mapper.Map<AuthenticationViewModel>(
+                await authenticationService.AuthenticateAsync(user.Email)),
             "Login failed, please try again.");
     }
 
@@ -49,8 +50,9 @@ public class AuthenticationController(IUserService userService, IAuthenticationS
     public async Task<ActionResult> Refresh(RefreshViewModel refreshViewModel)
     {
         return OkOrUnauthorized(
-            mapper.Map<AuthenticationViewModel>(await authenticationService.RefreshAsync(mapper.Map<RefreshDto>(refreshViewModel))),
-            "Refresh failed, please try again.");
+            mapper.Map<AuthenticationViewModel>(
+                await authenticationService.RefreshAsync(
+                    mapper.Map<RefreshDto>(refreshViewModel))));
     }
 
     [HttpDelete("Revoke")]

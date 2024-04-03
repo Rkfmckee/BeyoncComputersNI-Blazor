@@ -1,4 +1,4 @@
-﻿using BeyondComputersNi.Blazor.ViewModels.Authentication;
+﻿using BeyondComputersNi.Shared.ViewModels.Authentication;
 
 namespace BeyondComputersNi.Blazor.Interfaces.Authentication;
 public interface ITokenService

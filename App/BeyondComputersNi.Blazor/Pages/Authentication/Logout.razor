@@ -1,5 +1,8 @@
 ﻿@using BeyondComputersNi.Blazor.Interfaces.Authentication
+@using BeyondComputersNi.Blazor.Pages.Authentication.Login
 @using BeyondComputersNi.Blazor.Pages.Status
+
+
 @attribute [Route(PageUrl)]
 
 <MudText Typo="Typo.body1" Align="Align.Center">Logging out...</MudText>
@@ -29,6 +32,6 @@
         {
         }
 
-        NavigationManager!.NavigateTo(Login.PageUrl);
+        NavigationManager!.NavigateTo(Login.Login.PageUrl);
     }
 }

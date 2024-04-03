@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BeyondComputersNi.Api.ViewModels;
 using BeyondComputersNi.Services.DataTransferObjects;
+using BeyondComputersNi.Shared.ViewModels;
 
 namespace BeyondComputersNi.Services.MappingProfiles;
 

@@ -1,4 +1,4 @@
-﻿namespace BeyondComputersNi.Blazor.ViewModels.Authentication;
+﻿namespace BeyondComputersNi.Shared.ViewModels.Authentication;
 
 public class RefreshViewModel
 {

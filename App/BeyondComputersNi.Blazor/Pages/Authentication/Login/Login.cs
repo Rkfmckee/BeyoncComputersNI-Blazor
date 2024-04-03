@@ -1,11 +1,11 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
 using BeyondComputersNi.Blazor.Pages.Status;
-using BeyondComputersNi.Blazor.ViewModels.Authentication;
+using BeyondComputersNi.Shared.ViewModels.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
-namespace BeyondComputersNi.Blazor.Pages.Authentication;
+namespace BeyondComputersNi.Blazor.Pages.Authentication.Login;
 
 public partial class Login : IDisposable
 {
@@ -13,6 +13,9 @@ public partial class Login : IDisposable
 
     [SupplyParameterFromQuery]
     private bool NeedAuth { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? RedirectTo { get; set; }
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; }
@@ -30,7 +33,7 @@ public partial class Login : IDisposable
     protected override void OnInitialized()
     {
         if (AuthenticationService is null) NavigationManager!.NavigateTo(Error.PageUrl);
-        if (NeedAuth) Snackbar.Add("You need to log in to continue", Severity.Info);
+        if (NeedAuth || !string.IsNullOrEmpty(RedirectTo)) Snackbar.Add("You need to log in to continue", Severity.Info);
 
         LoginViewModel = new LoginViewModel();
         EditContext = new EditContext(LoginViewModel);
@@ -50,10 +53,13 @@ public partial class Login : IDisposable
         if (LoginViewModel is null) return;
         HasErrors = false;
 
+        var redirectUrl = string.IsNullOrEmpty(RedirectTo) ? Home.PageUrl : RedirectTo;
+
         try
         {
             await AuthenticationService.LoginAsync(LoginViewModel);
-            NavigationManager!.NavigateTo(Home.PageUrl);
+
+            NavigationManager!.NavigateTo(redirectUrl);
             Snackbar.Add("Login successful", Severity.Success);
         }
         catch (Exception ex)

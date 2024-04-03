@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace BeyondComputersNi.Shared.Extensions;
 

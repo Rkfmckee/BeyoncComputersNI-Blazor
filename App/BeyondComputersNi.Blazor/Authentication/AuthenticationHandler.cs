@@ -1,5 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
-using BeyondComputersNi.Blazor.Pages.Authentication;
+using BeyondComputersNi.Blazor.Pages.Authentication.Login;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net;

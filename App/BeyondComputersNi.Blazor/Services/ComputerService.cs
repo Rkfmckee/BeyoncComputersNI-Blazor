@@ -1,5 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces;
-using BeyondComputersNi.Blazor.ViewModels;
+using BeyondComputersNi.Shared.ViewModels;
 
 namespace BeyondComputersNi.Blazor.Services;
 

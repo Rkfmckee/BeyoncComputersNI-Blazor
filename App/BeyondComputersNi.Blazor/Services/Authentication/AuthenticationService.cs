@@ -1,5 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
-using BeyondComputersNi.Blazor.ViewModels.Authentication;
+using BeyondComputersNi.Shared.ViewModels.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BeyondComputersNi.Blazor.Services.Authentication;

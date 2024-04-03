@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BeyondComputersNi.Api.ViewModels.Authentication;
+namespace BeyondComputersNi.Shared.ViewModels.Authentication;
 
-public class LoginViewModel
+public class RegisterViewModel
 {
     [EmailAddress]
     public required string Email { get; set; }
     public required string Password { get; set; }
+    public string? Name { get; set; }
 }
