@@ -22,7 +22,9 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.NewestOnTop = true;
     config.SnackbarConfiguration.ShowCloseIcon = true;
     config.SnackbarConfiguration.SnackbarVariant = Variant.Outlined;
-    config.SnackbarConfiguration.VisibleStateDuration = 10000;
+    config.SnackbarConfiguration.VisibleStateDuration = 5000;
+    config.SnackbarConfiguration.ShowTransitionDuration = 500;
+    config.SnackbarConfiguration.HideTransitionDuration = 500;
 });
 
 builder.Services.AddHttpClient(builder.Configuration["Api:HttpClient"] ?? "")

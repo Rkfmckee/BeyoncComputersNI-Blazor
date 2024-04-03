@@ -5,6 +5,9 @@ namespace BeyondComputersNi.Shared.ViewModels.Authentication;
 public class LoginViewModel
 {
     [EmailAddress]
+    [Required(ErrorMessage = "Email address is required.")]
     public string? Email { get; set; }
+
+    [Required(ErrorMessage = "Password is required.")]
     public string? Password { get; set; }
 }

@@ -29,9 +29,6 @@ public class AuthenticationHandler(ITokenService tokenService, IConfiguration co
                 await AppendAuthTokenToRequest(request);
 
                 response = await base.SendAsync(request, cancellationToken);
-
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    navigationManager.NavigateTo($"{Login.PageUrl}?needAuth=true", true);
             }
             finally
             { 
