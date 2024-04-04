@@ -1,4 +1,5 @@
 ﻿@attribute [Route(PageUrl)]
+@inherits Form
 
 <EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
     <DataAnnotationsValidator />

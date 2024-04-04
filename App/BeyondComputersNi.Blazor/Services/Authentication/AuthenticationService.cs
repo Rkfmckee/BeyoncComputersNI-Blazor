@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 namespace BeyondComputersNi.Blazor.Services.Authentication;
 
 public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfiguration configuration, ITokenService tokenService,
-    AuthenticationStateProvider authenticationStateProvider) : BaseService(httpClientFactory, configuration), IAuthenticationService
+    AuthenticationStateProvider authenticationStateProvider) : HttpService(httpClientFactory, configuration), IAuthenticationService
 {
-    public async Task<DateTime> LoginAsync(LoginViewModel login)
+    public override string BaseUrl => "api/authentication";
+
+    public async Task<DateTime> LoginAsync(LoginViewModel loginViewModel)
     {
-        var authenticationViewModel = await PostAsync<AuthenticationViewModel>("api/authentication/login", login);
+        var authenticationViewModel = await PostAsync<AuthenticationViewModel>("login", loginViewModel);
         await tokenService.SetTokensAsync(authenticationViewModel);
         await authenticationStateProvider.GetAuthenticationStateAsync();
 
@@ -20,7 +22,7 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
     {
         try
         {
-            await DeleteAsync("api/authentication/revoke");
+            await DeleteAsync("revoke");
         }
         catch (Exception)
         {
@@ -28,5 +30,10 @@ public class AuthenticationService(IHttpClientFactory httpClientFactory, IConfig
 
         await tokenService.RemoveTokensAsync();
         await authenticationStateProvider.GetAuthenticationStateAsync();
+    }
+
+    public async Task RegisterAsync(RegisterViewModel registerViewModel)
+    {
+        await PostAsync("register", registerViewModel);
     }
 }

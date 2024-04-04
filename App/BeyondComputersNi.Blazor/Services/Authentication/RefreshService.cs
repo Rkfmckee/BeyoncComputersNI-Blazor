@@ -3,8 +3,10 @@ using BeyondComputersNi.Shared.ViewModels.Authentication;
 
 namespace BeyondComputersNi.Blazor.Services.Authentication;
 
-public class RefreshService(IHttpClientFactory httpClientFactory, IConfiguration configuration) : BaseService(httpClientFactory, configuration), IRefreshService
+public class RefreshService(IHttpClientFactory httpClientFactory, IConfiguration configuration) : HttpService(httpClientFactory, configuration), IRefreshService
 {
+    public override string BaseUrl => "api/authentication";
+
     public async Task<AuthenticationViewModel?> RefreshAsync(string authTokenString, string refreshTokenString)
     {
         var refreshViewModel = new RefreshViewModel
@@ -15,7 +17,7 @@ public class RefreshService(IHttpClientFactory httpClientFactory, IConfiguration
 
         try
         {
-            return await PostAsync<AuthenticationViewModel>("api/authentication/refresh", refreshViewModel);
+            return await PostAsync<AuthenticationViewModel>("refresh", refreshViewModel);
         }
         catch (Exception)
         {

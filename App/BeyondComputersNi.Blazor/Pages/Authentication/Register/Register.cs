@@ -1,4 +1,6 @@
-﻿using BeyondComputersNi.Blazor.Interfaces.Authentication;
+﻿using BeyondComputersNi.Blazor.Components;
+using BeyondComputersNi.Blazor.Interfaces.Authentication;
+using BeyondComputersNi.Blazor.Pages.Status;
 using BeyondComputersNi.Shared.ViewModels.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -6,7 +8,7 @@ using MudBlazor;
 
 namespace BeyondComputersNi.Blazor.Pages.Authentication.Register;
 
-public partial class Register : IDisposable
+public partial class Register : Form
 {
     public const string PageUrl = "/Register";
 
@@ -20,54 +22,29 @@ public partial class Register : IDisposable
     private ISnackbar Snackbar { get; set; }
 
     private RegisterViewModel? RegisterViewModel { get; set; }
-    private EditContext? EditContext { get; set; }
-    private bool HasErrors { get; set; }
 
     protected override void OnInitialized()
     {
+        if (AuthenticationService is null) NavigationManager!.NavigateTo(Error.PageUrl);
+
         RegisterViewModel = new RegisterViewModel();
-        EditContext = new EditContext(RegisterViewModel);
-        EditContext.OnValidationStateChanged += HandleValidationStateChanged;
+        InitializeForm(RegisterViewModel);
     }
 
-    private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
+    protected async override void OnValidSubmit(EditContext context)
     {
-        if (EditContext is null) return;
-
-        HasErrors = EditContext?.GetValidationMessages().Any() ?? false;
-        StateHasChanged();
-    }
-
-    private async void OnValidSubmit(EditContext context)
-    {
-        if (RegisterViewModel is null) return;
-        HasErrors = false;
+        base.OnValidSubmit(context);
 
         try
         {
-            //await AuthenticationService.LoginAsync();
+            await AuthenticationService.RegisterAsync(RegisterViewModel!);
 
-            NavigationManager!.NavigateTo(Home.PageUrl);
-            Snackbar.Add("Registration successful", Severity.Success);
+            NavigationManager!.NavigateTo(Login.Login.PageUrl);
+            Snackbar.Add("Registration successful, you can now log in", Severity.Success);
         }
         catch (Exception ex)
         {
             Snackbar.Add(ex.Message, Severity.Error);
         }
-
-        StateHasChanged();
-    }
-
-    private void OnInvalidSubmit(EditContext context)
-    {
-        HasErrors = true;
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        if (EditContext is null) return;
-
-        EditContext.OnValidationStateChanged -= HandleValidationStateChanged;
     }
 }
