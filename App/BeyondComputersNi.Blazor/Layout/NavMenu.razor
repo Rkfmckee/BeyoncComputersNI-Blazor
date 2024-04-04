@@ -4,11 +4,24 @@
 
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
-    <MudNavLink Href="@Login.PageUrl" Match="NavLinkMatch.Prefix">Login</MudNavLink>
-    <MudNavLink Href="@Logout.PageUrl" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
-    <MudNavLink Href="@Register.PageUrl" Match="NavLinkMatch.Prefix">Register</MudNavLink>
-    <MudNavGroup Title="Testing" Expanded="true">
-        <MudNavLink Href="/auth" Match="NavLinkMatch.Prefix">Test authentication</MudNavLink>
-        <MudNavLink Href="/test" Match="NavLinkMatch.Prefix">Doesn't exist</MudNavLink>
-    </MudNavGroup>
+
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var name = @context?.User?.Identity?.Name ?? "User";
+                var greetingMessage = $"Hello, {name}!";
+            }
+
+            <MudNavGroup Title="@greetingMessage" Expanded="true">
+                <MudNavLink Href="#" Match="NavLinkMatch.Prefix">My account</MudNavLink>
+                <MudNavLink Href="@Logout.PageUrl" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
+            </MudNavGroup>
+        </Authorized>
+        <NotAuthorized>
+            <MudNavGroup Title="Account" Expanded="true">
+                <MudNavLink Href="@Login.PageUrl" Match="NavLinkMatch.Prefix">Login</MudNavLink>
+                <MudNavLink Href="@Register.PageUrl" Match="NavLinkMatch.Prefix">Register</MudNavLink>
+            </MudNavGroup>
+        </NotAuthorized>
+    </AuthorizeView>
 </MudNavMenu>

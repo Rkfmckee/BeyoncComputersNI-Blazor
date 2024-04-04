@@ -14,7 +14,7 @@
                     <FormValidationErrors />
                 }
 
-                <MudTextField @bind-Value="RegisterViewModel!.Email" For="@(() => RegisterViewModel!.Email)" Label="Email address" Class="mt-2" />
+                <EmailField @bind-Value="RegisterViewModel!.Email" For="@(() => RegisterViewModel!.Email)" Class="mt-2" />
 
                 <PasswordField @bind-Value="RegisterViewModel!.Password" For="@(() => RegisterViewModel!.Password)" Class="mt-2" />
 

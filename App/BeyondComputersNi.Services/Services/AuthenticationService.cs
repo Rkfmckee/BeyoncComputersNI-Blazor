@@ -25,10 +25,10 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
             if (user is null) return null;
         }
 
-        var authToken = GenerateToken(email, TokenType.Auth);
+        var authToken = GenerateToken(TokenType.Auth, user);
         var authTokenString = new JwtSecurityTokenHandler().WriteToken(authToken);
 
-        var refreshToken = GenerateToken(email, TokenType.Refresh);
+        var refreshToken = GenerateToken(TokenType.Refresh);
         var refreshTokenString = new JwtSecurityTokenHandler().WriteToken(refreshToken);
 
         user.RefreshToken = refreshTokenString;
@@ -78,7 +78,7 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
         return true;
     }
 
-    private JwtSecurityToken GenerateToken(string email, TokenType tokenType)
+    private JwtSecurityToken GenerateToken(TokenType tokenType, User? user = null)
     {
         var secretKey = (tokenType == TokenType.Auth ?
             configuration["Jwt:AuthSecret"] :
@@ -90,11 +90,7 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
             configuration["Jwt:RefreshExpiryMinutes"] ??
              throw new InvalidOperationException("Expiry time not configured");
 
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Email, email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+        var claims = GetClaims(user);
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
 
@@ -104,6 +100,21 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
             expires: DateTime.UtcNow.AddMinutes(int.Parse(expiryTime!)),
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
             claims: claims);
+    }
+
+    private List<Claim> GetClaims(User? user)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        if (user is null) return claims;
+
+        claims.Add(new Claim(ClaimTypes.Email, user.Email));
+        if (!string.IsNullOrEmpty(user.Name)) claims.Add(new Claim(ClaimTypes.Name, user.Name));
+
+        return claims;
     }
 
     private ClaimsPrincipal? GetClaimsPrincipalFromExpiredToken(string token)
