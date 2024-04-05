@@ -14,7 +14,14 @@
                     <FormValidationErrors />
                 }
 
-                <EmailField @bind-Value="LoginViewModel!.Email" For="@(() => LoginViewModel!.Email)" Class="mt-2" />
+                @if (LoggingIn)
+                {
+                    <div class="d-flex justify-content-center">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" Class="mt-4" />
+                    </div>
+                }
+
+                <EmailField @bind-Value="LoginViewModel!.Email" For="@(() => LoginViewModel!.Email)" Class="mt-2" HelperText="" />
 
                 <PasswordField @bind-Value="LoginViewModel!.Password" For="@(() => LoginViewModel!.Password)" Class="mt-2" />
 

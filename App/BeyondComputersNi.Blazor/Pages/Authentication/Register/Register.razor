@@ -14,6 +14,13 @@
                     <FormValidationErrors />
                 }
 
+                @if (Registering)
+                {
+                    <div class="d-flex justify-content-center">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" Class="mt-4" />
+                    </div>
+                }
+
                 <EmailField @bind-Value="RegisterViewModel!.Email" For="@(() => RegisterViewModel!.Email)" Class="mt-2" />
 
                 <PasswordField @bind-Value="RegisterViewModel!.Password" For="@(() => RegisterViewModel!.Password)" Class="mt-2" />

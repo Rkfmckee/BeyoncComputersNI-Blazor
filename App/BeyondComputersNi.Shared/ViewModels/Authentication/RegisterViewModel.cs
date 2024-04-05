@@ -5,11 +5,12 @@ namespace BeyondComputersNi.Shared.ViewModels.Authentication;
 
 public class RegisterViewModel
 {
-    [Email]
     [Required(ErrorMessage = "Email address is required.")]
+    [Email]
     public string? Email { get; set; }
 
     [Required(ErrorMessage = "Password is required.")]
+    [ComplexPassword]
     public string? Password { get; set; }
 
     [Required(ErrorMessage = "You must confirm your password.")]

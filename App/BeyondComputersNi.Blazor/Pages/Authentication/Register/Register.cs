@@ -22,6 +22,8 @@ public partial class Register : Form
     private ISnackbar Snackbar { get; set; }
 
     private RegisterViewModel? RegisterViewModel { get; set; }
+    private bool Registering { get; set; }
+
 
     protected override void OnInitialized()
     {
@@ -35,6 +37,8 @@ public partial class Register : Form
     {
         base.OnValidSubmit(context);
 
+        Registering = true;
+
         try
         {
             await AuthenticationService.RegisterAsync(RegisterViewModel!);
@@ -46,5 +50,8 @@ public partial class Register : Form
         {
             Snackbar.Add(ex.Message, Severity.Error);
         }
+
+        Registering = false;
+        StateHasChanged();
     }
 }

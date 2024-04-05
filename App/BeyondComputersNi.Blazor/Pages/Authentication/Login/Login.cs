@@ -28,6 +28,7 @@ public partial class Login : Form
     private ISnackbar Snackbar { get; set; }
 
     private LoginViewModel? LoginViewModel { get; set; }
+    private bool LoggingIn { get; set; }
 
     protected override void OnInitialized()
     {
@@ -43,6 +44,7 @@ public partial class Login : Form
         base.OnValidSubmit(context);
 
         var redirectUrl = string.IsNullOrEmpty(RedirectTo) ? Home.PageUrl : RedirectTo;
+        LoggingIn = true;
 
         try
         {
@@ -55,5 +57,8 @@ public partial class Login : Form
         {
             Snackbar.Add(ex.Message, Severity.Error);
         }
+
+        LoggingIn = false;
+        StateHasChanged();
     }
 }
