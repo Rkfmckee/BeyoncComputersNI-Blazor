@@ -1,5 +1,6 @@
 ﻿using BeyondComputersNi.Dal.Entities;
 using BeyondComputersNi.Dal.Interfaces;
+using BC = BCrypt.Net.BCrypt;
 
 namespace BeyondComputersNi.Dal.Database;
 
@@ -8,6 +9,8 @@ public static class Seed
     private static IServiceScope? serviceScope;
     private static BcniDbContext? dbContext;
     private static IDataGenerator? dataGenerator;
+
+    private const string defaultPassword = "Pa$$w0rd";
 
     public static WebApplication SeedData(this WebApplication app)
     {
@@ -20,6 +23,7 @@ public static class Seed
                 dbContext.Database.EnsureCreated();
 
                 SeedComputers();
+                SeedUsers();
 
                 dbContext.SaveChanges();
             }
@@ -32,7 +36,32 @@ public static class Seed
     {
         if (EntityHasValues<Computer>()) return;
 
-        dbContext!.Set<Computer>().AddRange(dataGenerator!.GenerateComputers(10));
+        var computers = dataGenerator!.GenerateComputers(10);
+
+        dbContext!.Set<Computer>().AddRange(computers);
+    }
+
+    private static void SeedUsers()
+    {
+        if (EntityHasValues<User>()) return;
+
+        var users = new List<User>
+        {
+            new User
+            {
+                Email = "admin@bcni.local",
+                PasswordHash = BC.HashPassword(defaultPassword),
+                Name = "Admin"
+            },
+            new User
+            {
+                Email = "user@bcni.local",
+                PasswordHash = BC.HashPassword(defaultPassword),
+                Name = dataGenerator!.GenerateUser().Name
+            }
+        };
+
+        dbContext!.Set<User>().AddRange(users);
     }
 
     private static bool EntityHasValues<T>() where T : Entity

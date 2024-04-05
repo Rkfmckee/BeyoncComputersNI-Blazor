@@ -1,0 +1,29 @@
+﻿<MudTextField For="@For" Label="@Label" Class="@Class" HelperText="@HelperText"
+    Value="@Value" ValueChanged="@ValueChanged"/>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<string?>>? For { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; } = "Email address";
+
+    [Parameter]
+    public string? HelperText { get; set; } = "Example format: user@example.com";
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    private async Task OnValueChanged(string? value)
+    {
+        StateHasChanged();
+        await this.ValueChanged.InvokeAsync(value);
+    }
+}

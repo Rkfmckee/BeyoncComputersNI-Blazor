@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using BeyondComputersNi.Api.ViewModels;
 using BeyondComputersNi.Services.DataTransferObjects;
+using BeyondComputersNi.Shared.ViewModels;
 
 namespace BeyondComputersNi.Services.MappingProfiles;
 
-public class ComputerViewModelProfile : Profile
+public class ComputerProfiles : Profile
 {
-    public ComputerViewModelProfile()
+    public ComputerProfiles()
     {
         CreateMap<ComputerDto, ComputerViewModel>();
     }

@@ -5,4 +5,5 @@ public interface IDataGenerator
 {
     Computer GenerateComputer();
     IEnumerable<Computer> GenerateComputers(int number);
+    User GenerateUser();
 }

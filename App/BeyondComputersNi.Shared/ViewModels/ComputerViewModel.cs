@@ -1,4 +1,4 @@
-﻿namespace BeyondComputersNi.Api.ViewModels;
+﻿namespace BeyondComputersNi.Shared.ViewModels;
 
 public class ComputerViewModel
 {

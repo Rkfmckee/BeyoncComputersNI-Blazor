@@ -4,9 +4,9 @@ using BeyondComputersNi.Services.DataTransferObjects;
 
 namespace BeyondComputersNi.Services.MappingProfiles;
 
-public class ComputerDtoProfile : Profile
+public class ComputerProfiles : Profile
 {
-    public ComputerDtoProfile()
+    public ComputerProfiles()
     {
         CreateMap<Computer, ComputerDto>();
     }

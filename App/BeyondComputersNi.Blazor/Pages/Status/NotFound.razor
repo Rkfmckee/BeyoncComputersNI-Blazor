@@ -1,0 +1,11 @@
+﻿@attribute [Route(PageUrl)]
+@attribute [Route(PageUrlCode)]
+
+<MudText Typo="Typo.h1" Align="Align.Center">Not found</MudText>
+<MudText Typo="Typo.body1" Align="Align.Center">Sorry, the page you're looking for doesn't exist.</MudText>
+<MudText Typo="Typo.body1" Align="Align.Center">Click <MudLink Href="/">here</MudLink> to return home.</MudText>
+
+@code {
+    public const string PageUrl = "/NotFound";
+    public const string PageUrlCode = "/404";
+}

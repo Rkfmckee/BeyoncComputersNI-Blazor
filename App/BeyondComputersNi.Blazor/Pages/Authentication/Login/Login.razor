@@ -1,0 +1,34 @@
+﻿@attribute [Route(PageUrl)]
+@inherits Form
+
+<EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+    <DataAnnotationsValidator />
+
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" md="6">
+            <MudPaper Class="mt-8 pa-8" Elevation="3">
+                <MudText Typo="Typo.h1" Align="Align.Center">Login</MudText>
+
+                @if (HasErrors)
+                {
+                    <FormValidationErrors />
+                }
+
+                @if (LoggingIn)
+                {
+                    <div class="d-flex justify-content-center">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" Class="mt-4" />
+                    </div>
+                }
+
+                <EmailField @bind-Value="LoginViewModel!.Email" For="@(() => LoginViewModel!.Email)" Class="mt-2" HelperText="" />
+
+                <PasswordField @bind-Value="LoginViewModel!.Password" For="@(() => LoginViewModel!.Password)" Class="mt-2" />
+
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6" Disabled="@HasErrors">
+                    Login
+                </MudButton>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</EditForm>
