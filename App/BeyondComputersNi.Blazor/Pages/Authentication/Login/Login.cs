@@ -43,7 +43,7 @@ public partial class Login : Form
     {
         base.OnValidSubmit(context);
 
-        var redirectUrl = string.IsNullOrEmpty(RedirectTo) ? Home.PageUrl : RedirectTo;
+        var redirectUrl = string.IsNullOrEmpty(RedirectTo) ? Home.Home.PageUrl : RedirectTo;
         LoggingIn = true;
 
         try

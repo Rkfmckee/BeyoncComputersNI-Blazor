@@ -8,13 +8,13 @@
         <MudAppBar Elevation="4">
             <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@(() => DrawerOpen = !DrawerOpen)" />
             <MudContainer MaxWidth="MaxWidth.Large">
-                <MudImage Src="img/beyondcomputers.png" Alt="Beyond Computers" Height="50"/>
+                <MudImage Src="img/Branding/beyondcomputers.png" Alt="Beyond Computers" Height="50"/>
             </MudContainer>
         </MudAppBar>
 
         <MudDrawer @bind-Open="@DrawerOpen" Elevation="4">
             <div class="d-flex justify-content-center">
-                <MudImage Src="img/logo.png" Alt="Beyond Computers logo" Width="75" Class="m-3" />
+                <MudImage Src="img/Branding/logo.png" Alt="Beyond Computers logo" Width="75" Class="m-3" />
             </div>
             <NavMenu />
         </MudDrawer>
