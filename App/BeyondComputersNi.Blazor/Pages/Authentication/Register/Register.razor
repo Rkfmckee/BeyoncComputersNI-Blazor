@@ -7,7 +7,7 @@
     <MudGrid Justify="Justify.Center">
         <MudItem xs="12" md="6">
             <MudPaper Class="mt-8 pa-8" Elevation="3">
-                <MudText Typo="Typo.h1" Align="Align.Center">Register</MudText>
+                <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="true">Register</MudText>
 
                 @if (HasErrors)
                 {
@@ -17,11 +17,11 @@
                 @if (Registering)
                 {
                     <div class="d-flex justify-content-center">
-                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" Class="mt-4" />
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
                     </div>
                 }
 
-                <EmailField @bind-Value="RegisterViewModel!.Email" For="@(() => RegisterViewModel!.Email)" Class="mt-2" />
+                <EmailField @bind-Value="RegisterViewModel!.Email" For="@(() => RegisterViewModel!.Email)" />
 
                 <PasswordField @bind-Value="RegisterViewModel!.Password" For="@(() => RegisterViewModel!.Password)" Class="mt-2" />
 

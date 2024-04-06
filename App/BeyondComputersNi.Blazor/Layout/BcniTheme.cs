@@ -10,9 +10,14 @@ public class BcniTheme
         {
             Primary = Colors.LightBlue.Default,
             Secondary = Colors.Teal.Lighten2,
+            ActionDefault = Colors.LightBlue.Default,
+
             AppbarBackground = Colors.Shades.White,
             AppbarText = Colors.Grey.Darken4,
-            DrawerBackground = Colors.Shades.White
+
+            DrawerBackground = Colors.Shades.White,
+            DrawerIcon = Colors.Grey.Darken4,
+
         },
 
         Typography = new Typography
