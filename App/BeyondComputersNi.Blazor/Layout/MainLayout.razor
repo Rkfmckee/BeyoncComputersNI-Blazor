@@ -1,18 +1,18 @@
 ﻿@inherits LayoutComponentBase
 <div class="page">
-    <MudThemeProvider />
+    <MudThemeProvider Theme="@BcniTheme" />
     <MudDialogProvider />
     <MudSnackbarProvider />
 
     <MudLayout>
-        <MudAppBar>
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(() => DrawerOpen = !DrawerOpen)" />
+        <MudAppBar Elevation="4">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@(() => DrawerOpen = !DrawerOpen)" />
             <MudContainer MaxWidth="MaxWidth.Large">
-                Beyond Computers NI
+                <MudImage Src="img/beyondcomputers.png" Alt="Beyond Computers" Height="50"/>
             </MudContainer>
         </MudAppBar>
 
-        <MudDrawer @bind-Open="@DrawerOpen">
+        <MudDrawer @bind-Open="@DrawerOpen" Elevation="4">
             <NavMenu />
         </MudDrawer>
 
