@@ -18,9 +18,15 @@
                     <FormValidationErrors />
                 }
 
-                
+                <MudExpansionPanels Class="pt-4">
+                    <MudExpansionPanel Text="Motherboard">
+                        <SelectOrEnterFields Label="Motherboard"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectMotherboard"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterMotherboard" />
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
 
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6" Disabled="@HasErrors">
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
                     Save components
                 </MudButton>
             </MudPaper>

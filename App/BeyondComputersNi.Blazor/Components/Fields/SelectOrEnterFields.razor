@@ -1,0 +1,49 @@
+﻿<MudSelect Label="@SelectLabel" Value="@SelectValue" ValueChanged="@SelectValueChanged"
+           T="string" AnchorOrigin="Origin.BottomCenter" Disabled="@EnterHasValue" HelperText="@SelectHelperText">
+
+    <MudSelectItem Value="@("Cappuccino")" />
+    <MudSelectItem Value="@("Cafe Latte")" />
+    <MudSelectItem Value="@("Espresso")" />
+</MudSelect>
+
+<MudText Typo="Typo.body1" Class="mt-3"><strong>OR</strong></MudText>
+
+<MudTextField Label="@EnterLabel" Value="@EnterValue" ValueChanged="@EnterValueChanged" />
+
+@code {
+    [Parameter, EditorRequired]
+    public string? Label { get; set; }
+
+    [Parameter, EditorRequired]
+    public string? SelectValue { get; set; }
+
+    [Parameter, EditorRequired]
+    public string? EnterValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> SelectValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> EnterValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<string?>>? For { get; set; }
+
+    private string? SelectLabel => $"Select a {Label}";
+    private string? EnterLabel => $"Enter a {Label}";
+
+    private bool EnterHasValue => !string.IsNullOrEmpty(EnterValue);
+    private string SelectHelperText => EnterHasValue ? $"To select a value, remove what you entered for {Label} below" : "";
+
+    private async Task OnSelectValueChanged(string? value)
+    {
+        StateHasChanged();
+        await SelectValueChanged.InvokeAsync(value);
+    }
+
+    private async Task OnEnterValueChanged(string? value)
+    {
+        StateHasChanged();
+        await EnterValueChanged.InvokeAsync(value);
+    }
+}
