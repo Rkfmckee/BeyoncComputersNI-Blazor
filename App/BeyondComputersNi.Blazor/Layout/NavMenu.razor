@@ -1,9 +1,12 @@
 ﻿@using BeyondComputersNi.Blazor.Pages.Authentication
 @using BeyondComputersNi.Blazor.Pages.Authentication.Login
 @using BeyondComputersNi.Blazor.Pages.Authentication.Register
+@using BeyondComputersNi.Blazor.Pages.BuildJourney
+@using BeyondComputersNi.Blazor.Pages.Home
 
 <MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="@Home.PageUrl" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="@Build.PageUrl" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Computer">Start a Build</MudNavLink>
 
     <AuthorizeView>
         <Authorized>

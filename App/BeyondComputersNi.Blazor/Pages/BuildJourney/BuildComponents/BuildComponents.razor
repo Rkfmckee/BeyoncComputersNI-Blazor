@@ -1,0 +1,35 @@
+﻿
+@using BeyondComputersNi.Blazor.Pages.BuildJourney.Components.BuildTimeline
+@attribute [Route(PageUrl)]
+@inherits Form
+
+<Background />
+<EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+    <DataAnnotationsValidator />
+
+    <MudGrid>
+        <MudItem md="8">
+            <MudPaper Class="mt-8 pa-8" Elevation="3">
+                <MudText Typo="Typo.h2" Align="Align.Center">Build your computer</MudText>
+                <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Components</MudText>
+
+                @if (HasErrors)
+                {
+                    <FormValidationErrors />
+                }
+
+                
+
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6" Disabled="@HasErrors">
+                    Save components
+                </MudButton>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem md="4">
+            <MudPaper Class="mt-8 pa-8" Elevation="3">
+                <BuildTimeline CurrentItem="BuildTimelineItem.Components" />
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</EditForm>
