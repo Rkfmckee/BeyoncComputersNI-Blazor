@@ -1,13 +1,14 @@
 ﻿@attribute [Route(PageUrl)]
 @inherits Form
 
+<Background />
 <EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
     <DataAnnotationsValidator />
 
     <MudGrid Justify="Justify.Center">
         <MudItem xs="12" md="6">
             <MudPaper Class="mt-8 pa-8" Elevation="3">
-                <MudText Typo="Typo.h1" Align="Align.Center">Login</MudText>
+                <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="true">Login</MudText>
 
                 @if (HasErrors)
                 {
@@ -17,11 +18,11 @@
                 @if (LoggingIn)
                 {
                     <div class="d-flex justify-content-center">
-                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" Class="mt-4" />
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
                     </div>
                 }
 
-                <EmailField @bind-Value="LoginViewModel!.Email" For="@(() => LoginViewModel!.Email)" Class="mt-2" HelperText="" />
+                <EmailField @bind-Value="LoginViewModel!.Email" For="@(() => LoginViewModel!.Email)" HelperText="" />
 
                 <PasswordField @bind-Value="LoginViewModel!.Password" For="@(() => LoginViewModel!.Password)" Class="mt-2" />
 

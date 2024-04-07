@@ -3,7 +3,7 @@
 @using BeyondComputersNi.Blazor.Pages.Authentication.Register
 
 <MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
 
     <AuthorizeView>
         <Authorized>
@@ -12,13 +12,13 @@
                 var greetingMessage = $"Hello, {name}!";
             }
 
-            <MudNavGroup Title="@greetingMessage" Expanded="true">
+            <MudNavGroup Title="@greetingMessage" Expanded="true" Icon="@Icons.Material.Filled.Person">
                 <MudNavLink Href="#" Match="NavLinkMatch.Prefix">My account</MudNavLink>
                 <MudNavLink Href="@Logout.PageUrl" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
             </MudNavGroup>
         </Authorized>
         <NotAuthorized>
-            <MudNavGroup Title="Account" Expanded="true">
+            <MudNavGroup Title="Account" Expanded="true" Icon="@Icons.Material.Filled.Login">
                 <MudNavLink Href="@Login.PageUrl" Match="NavLinkMatch.Prefix">Login</MudNavLink>
                 <MudNavLink Href="@Register.PageUrl" Match="NavLinkMatch.Prefix">Register</MudNavLink>
             </MudNavGroup>
