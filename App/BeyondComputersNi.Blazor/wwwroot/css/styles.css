@@ -13,14 +13,14 @@
 }
 
 .background-image {
-    position: absolute;
-    left: 0;
     background-image: url(../img/Branding/paper-airplanes.jpg);
     background-repeat: repeat;
     background-attachment: fixed;
-    background-color: rgba(255, 255, 255, .8);
+    background-color: rgba(255, 255, 255, .9);
     background-blend-mode: lighten;
-    width: 100vw;
-    height: 90vh;
-    z-index: -1;
+    z-index: 1;
+}
+
+footer {
+    box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.2), 0px -4px 5px 0px rgba(0, 0, 0, 0.14), 0px -3px 5px 0px rgba(0, 0, 0, 0.12);
 }

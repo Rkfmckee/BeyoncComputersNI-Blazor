@@ -3,7 +3,6 @@
 @attribute [Route(PageUrl)]
 @inherits Form
 
-<Background />
 <EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
     <DataAnnotationsValidator />
 
@@ -18,11 +17,48 @@
                     <FormValidationErrors />
                 }
 
-                <MudExpansionPanels Class="pt-4">
+                <MudExpansionPanels Class="pt-4" MultiExpansion="true">
                     <MudExpansionPanel Text="Motherboard">
                         <SelectOrEnterFields Label="Motherboard"
                                              @bind-SelectValue="@BuildComponentsViewModel!.SelectMotherboard"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterMotherboard" />
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterMotherboard"
+                                             For="@(() => BuildComponentsViewModel!.Motherboard)" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="CPU">
+                        <SelectOrEnterFields Label="CPU"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectCPU"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterCPU"
+                                             For="@(() => BuildComponentsViewModel!.CPU)" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="CPUCooler">
+                        <SelectOrEnterFields Label="CPUCooler"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectCPUCooler"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterCPUCooler"
+                                             For="@(() => BuildComponentsViewModel!.CPUCooler)" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Memory">
+                        <SelectOrEnterFields Label="Memory"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectMemory"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterMemory"
+                                             For="@(() => BuildComponentsViewModel!.Memory)" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Storage">
+                        <SelectOrEnterFields Label="Storage"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectStorage"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterStorage"
+                                             For="@(() => BuildComponentsViewModel!.Storage)" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="GPU">
+                        <SelectOrEnterFields Label="GPU"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectGPU"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterGPU"
+                                             For="@(() => BuildComponentsViewModel!.GPU)" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="PSU">
+                        <SelectOrEnterFields Label="PSU"
+                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectPSU"
+                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterPSU"
+                                             For="@(() => BuildComponentsViewModel!.PSU)" />
                     </MudExpansionPanel>
                 </MudExpansionPanels>
 
@@ -33,7 +69,7 @@
         </MudItem>
 
         <MudItem md="4">
-            <MudPaper Class="mt-8 pa-8" Elevation="3">
+            <MudPaper Class="mt-8 pa-8" Elevation="3" Style="position: sticky; top: 10vh;">
                 <BuildTimeline CurrentItem="BuildTimelineItem.Components" />
             </MudPaper>
         </MudItem>

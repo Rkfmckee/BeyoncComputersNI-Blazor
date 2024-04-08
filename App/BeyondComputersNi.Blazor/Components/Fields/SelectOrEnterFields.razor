@@ -1,4 +1,4 @@
-﻿<MudSelect Label="@SelectLabel" Value="@SelectValue" ValueChanged="@SelectValueChanged"
+﻿<MudSelect Label="@SelectLabel" Value="@SelectValue" ValueChanged="@SelectValueChanged" For="@For"
            T="string" AnchorOrigin="Origin.BottomCenter" Disabled="@EnterHasValue" HelperText="@SelectHelperText">
 
     <MudSelectItem Value="@("Cappuccino")" />
@@ -8,7 +8,7 @@
 
 <MudText Typo="Typo.body1" Class="mt-3"><strong>OR</strong></MudText>
 
-<MudTextField Label="@EnterLabel" Value="@EnterValue" ValueChanged="@EnterValueChanged" />
+<MudTextField Label="@EnterLabel" Value="@EnterValue" ValueChanged="@EnterValueChanged" For="@For" />
 
 @code {
     [Parameter, EditorRequired]
