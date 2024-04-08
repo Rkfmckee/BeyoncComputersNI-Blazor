@@ -10,14 +10,26 @@
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
 
-    public BuildViewModel? BuildViewModel { get; set; }
+    [Inject]
+    private IBuildService? BuildService { get; set; }
 
-    protected override void OnInitialized()
+    [Inject]
+    private ISnackbar? Snackbar { get; set; }
+
+    protected async override Task OnInitializedAsync()
     {
-        // Create an instance of build, and return it's Id and Number in BuildViewModel
+        try
+        {
+            var id = await BuildService!.CreateBuild();
+            if (id == 0) throw new Exception("Error, please try again");
 
-        BuildViewModel = new BuildViewModel(BuildComponents.BuildComponents.PageUrl);
-
-        NavigationManager?.NavigateTo(BuildViewModel.ComponentsUrl);
+            var componentsUrl = BuildComponents.BuildComponents.PageUrl.Replace("{id:int}", id.ToString());
+            NavigationManager?.NavigateTo(componentsUrl);
+        }
+        catch(Exception ex)
+        {
+            Snackbar?.Add(ex.Message, Severity.Error);
+            NavigationManager?.NavigateTo(Home.Home.PageUrl);
+        }
     }
 }

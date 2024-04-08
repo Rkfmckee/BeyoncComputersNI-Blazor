@@ -30,9 +30,26 @@ public abstract class HttpService(IHttpClientFactory httpClientFactory, IConfigu
         return content;
     }
 
+    protected async Task<T> PostAsync<T>(string url)
+    {
+        var response = await httpClient.PostAsync($"{BaseUrl}/{url}", null);
+        if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
+
+        var content = await response.Content.ReadFromJsonAsync<T>();
+        if (content is null) throw new InvalidDataException();
+
+        return content;
+    }
+
     protected async Task PostAsync(string url, object requestBody)
     {
         var response = await httpClient.PostAsync($"{BaseUrl}/{url}", JsonContent.Create(requestBody));
+        if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
+    }
+
+    protected async Task PostAsync(string url)
+    {
+        var response = await httpClient.PostAsync($"{BaseUrl}/{url}", null);
         if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
     }
 
@@ -47,7 +64,7 @@ public abstract class HttpService(IHttpClientFactory httpClientFactory, IConfigu
         var responseBodyMessage = await response.Content.ReadAsStringAsync();
 
         var errorMessage = string.IsNullOrEmpty(responseBodyMessage) ?
-            $"{response.StatusCode}" : 
+            $"{response.StatusCode}" :
             $"{response.StatusCode}: {responseBodyMessage}";
 
         throw new Exception(errorMessage);

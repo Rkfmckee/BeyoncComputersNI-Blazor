@@ -40,6 +40,7 @@ builder.Services.AddTransient<AuthenticationHandler>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IRefreshService, RefreshService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IBuildService, BuildService>();
 builder.Services.AddScoped<IComputerService, ComputerService>();
 
 await builder.Build().RunAsync();
