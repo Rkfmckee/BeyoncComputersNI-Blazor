@@ -10,5 +10,9 @@ public class BuildProfile : Profile
         CreateMap<BuildComponentsDto, Dal.Entities.Build>()
             .ForMember(dest => dest.Id,
                 opt => opt.Ignore());
+
+        CreateMap<BuildPeripheralsDto, Dal.Entities.Build>()
+            .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
     }
 }

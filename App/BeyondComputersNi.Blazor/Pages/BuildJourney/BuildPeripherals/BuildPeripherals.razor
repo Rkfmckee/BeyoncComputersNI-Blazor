@@ -1,0 +1,76 @@
+﻿@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildSkeleton
+@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildTimeline
+
+@attribute [Route(PageUrl)]
+@inherits Form
+
+@if (LoadingForm)
+{
+    <BuildSkeleton />
+}
+else
+{
+    <EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+        <DataAnnotationsValidator />
+
+        <MudGrid Class="mb-6">
+            <MudItem md="8">
+                <MudPaper Class="mt-8 pa-8" Elevation="3">
+                    <MudText Typo="Typo.h2" Align="Align.Center">Build your computer</MudText>
+                    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Peripherals</MudText>
+
+                    @if (HasErrors)
+                    {
+                        <FormValidationErrors />
+                    }
+
+                    <MudExpansionPanels Class="pt-4" MultiExpansion="true">
+                        <MudExpansionPanel Text="Case">
+                            <SelectOrEnterFields Label="Case"
+                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectCase"
+                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterCase"
+                            For="@(() => BuildPeripheralsViewModel!.Case)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Keyboard">
+                            <SelectOrEnterFields Label="Keyboard"
+                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectKeyboard"
+                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterKeyboard"
+                            For="@(() => BuildPeripheralsViewModel!.Keyboard)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Mouse">
+                            <SelectOrEnterFields Label="Mouse"
+                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectMouse"
+                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterMouse"
+                            For="@(() => BuildPeripheralsViewModel!.Mouse)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Monitor">
+                            <SelectOrEnterFields Label="Monitor"
+                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectMonitor"
+                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterMonitor"
+                            For="@(() => BuildPeripheralsViewModel!.Monitor)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Speakers">
+                            <SelectOrEnterFields Label="Speakers"
+                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectSpeakers"
+                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterSpeakers"
+                            For="@(() => BuildPeripheralsViewModel!.Speakers)" />
+                        </MudExpansionPanel>
+                    </MudExpansionPanels>
+
+                    @if (Submitting)
+                    {
+                        <LoadingSpinner />
+                    }
+
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
+                        Save peripherals
+                    </MudButton>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem md="4">
+                <BuildTimeline CurrentItem="BuildTimelineItem.Peripherals" />
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+}

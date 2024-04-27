@@ -42,6 +42,17 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         return true;
     }
 
+    public async Task<bool> AddPeripherals(BuildPeripheralsDto buildPeripherals)
+    {
+        var build = await buildRepository.Get().SingleOrDefaultAsync(b => b.Id == buildPeripherals.Id);
+        if (build == null) return false;
+
+        mapper.Map(buildPeripherals, build);
+        await buildRepository.SaveChangesAsync();
+
+        return true;
+    }
+
     #region Helpers
 
     private const string regexCapture = "(.*)";

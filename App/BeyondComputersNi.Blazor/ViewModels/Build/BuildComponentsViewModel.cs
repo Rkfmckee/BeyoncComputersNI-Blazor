@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildPeripherals;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeyondComputersNi.Blazor.ViewModels.Build;
 
@@ -10,6 +11,7 @@ public class BuildComponentsViewModel
     }
 
     public int Id { get; set; }
+    public string PeripheralsUrl => BuildPeripherals.PageUrl.Replace("{id:int}", Id.ToString());
 
     public string? SelectMotherboard { get; set; }
     public string? EnterMotherboard { get; set; }

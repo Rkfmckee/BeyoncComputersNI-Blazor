@@ -10,7 +10,14 @@ namespace BeyondComputersNi.Api.Controllers;
 [ApiController]
 public class BuildController(IBuildService buildService, IMapper mapper) : BaseController
 {
-    [HttpPost("create")]
+    [HttpGet("Exists/{id}")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    public async Task<ActionResult<int>> BuildExists(int id)
+    {
+        return Ok(await buildService.BuildExists(id));
+    }
+
+    [HttpPost("Create")]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     public async Task<ActionResult<int>> CreateBuild()
@@ -18,7 +25,7 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
         return OkOrError(await buildService.CreateBuild());
     }
 
-    [HttpPut("components")]
+    [HttpPut("Components")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -30,5 +37,19 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
         return NoContentOrBadRequest(
             await buildService.AddComponents(mapper.Map<BuildComponentsDto>(buildComponents)),
             "Components could not be added, please try again.");
+    }
+
+    [HttpPut("Peripherals")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> AddPeripherals(BuildPeripheralsViewModel buildPeripherals)
+    {
+        if (!await buildService.BuildExists(buildPeripherals.Id))
+            return NotFound("Your build does not exist, please create a new one.");
+
+        return NoContentOrBadRequest(
+            await buildService.AddPeripherals(mapper.Map<BuildPeripheralsDto>(buildPeripherals)),
+            "Peripherals could not be added, please try again.");
     }
 }

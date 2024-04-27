@@ -1,82 +1,88 @@
-﻿@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildTimeline
+﻿@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildSkeleton
+@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildTimeline
 
 @attribute [Route(PageUrl)]
 @inherits Form
 
-<EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
-    <DataAnnotationsValidator />
+@if (LoadingForm)
+{
+    <BuildSkeleton />
+}
+else
+{
+    <EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+        <DataAnnotationsValidator />
 
-    <MudGrid Class="mb-6">
-        <MudItem md="8">
-            <MudPaper Class="mt-8 pa-8" Elevation="3">
-                <MudText Typo="Typo.h2" Align="Align.Center">Build your computer</MudText>
-                <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Components</MudText>
+        <MudGrid Class="mb-6">
+            <MudItem md="8">
+                <MudPaper Class="mt-8 pa-8" Elevation="3">
+                    <MudText Typo="Typo.h2" Align="Align.Center">Build your computer</MudText>
+                    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Components</MudText>
 
-                @if (HasErrors)
-                {
-                    <FormValidationErrors />
-                }
+                    @if (HasErrors)
+                    {
+                        <FormValidationErrors />
+                    }
 
-                <MudExpansionPanels Class="pt-4" MultiExpansion="true">
-                    <MudExpansionPanel Text="Motherboard">
-                        <SelectOrEnterFields Label="Motherboard"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectMotherboard"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterMotherboard"
-                                             For="@(() => BuildComponentsViewModel!.Motherboard)" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="CPU">
-                        <SelectOrEnterFields Label="CPU"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectCPU"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterCPU"
-                                             For="@(() => BuildComponentsViewModel!.CPU)" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="CPUCooler">
-                        <SelectOrEnterFields Label="CPUCooler"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectCPUCooler"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterCPUCooler"
-                                             For="@(() => BuildComponentsViewModel!.CPUCooler)" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="Memory">
-                        <SelectOrEnterFields Label="Memory"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectMemory"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterMemory"
-                                             For="@(() => BuildComponentsViewModel!.Memory)" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="Storage">
-                        <SelectOrEnterFields Label="Storage"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectStorage"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterStorage"
-                                             For="@(() => BuildComponentsViewModel!.Storage)" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="GPU">
-                        <SelectOrEnterFields Label="GPU"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectGPU"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterGPU"
-                                             For="@(() => BuildComponentsViewModel!.GPU)" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="PSU">
-                        <SelectOrEnterFields Label="PSU"
-                                             @bind-SelectValue="@BuildComponentsViewModel!.SelectPSU"
-                                             @bind-EnterValue="@BuildComponentsViewModel!.EnterPSU"
-                                             For="@(() => BuildComponentsViewModel!.PSU)" />
-                    </MudExpansionPanel>
-                </MudExpansionPanels>
+                    <MudExpansionPanels Class="pt-4" MultiExpansion="true">
+                        <MudExpansionPanel Text="Motherboard">
+                            <SelectOrEnterFields Label="Motherboard"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectMotherboard"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterMotherboard"
+                                                 For="@(() => BuildComponentsViewModel!.Motherboard)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="CPU">
+                            <SelectOrEnterFields Label="CPU"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectCPU"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterCPU"
+                                                 For="@(() => BuildComponentsViewModel!.CPU)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="CPUCooler">
+                            <SelectOrEnterFields Label="CPUCooler"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectCPUCooler"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterCPUCooler"
+                                                 For="@(() => BuildComponentsViewModel!.CPUCooler)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Memory">
+                            <SelectOrEnterFields Label="Memory"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectMemory"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterMemory"
+                                                 For="@(() => BuildComponentsViewModel!.Memory)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Storage">
+                            <SelectOrEnterFields Label="Storage"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectStorage"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterStorage"
+                                                 For="@(() => BuildComponentsViewModel!.Storage)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="GPU">
+                            <SelectOrEnterFields Label="GPU"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectGPU"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterGPU"
+                                                 For="@(() => BuildComponentsViewModel!.GPU)" />
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="PSU">
+                            <SelectOrEnterFields Label="PSU"
+                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectPSU"
+                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterPSU"
+                                                 For="@(() => BuildComponentsViewModel!.PSU)" />
+                        </MudExpansionPanel>
+                    </MudExpansionPanels>
 
-                @if (Submitting)
-                {
-                    <LoadingSpinner />
-                }
+                    @if (Submitting)
+                    {
+                        <LoadingSpinner />
+                    }
 
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
-                    Save components
-                </MudButton>
-            </MudPaper>
-        </MudItem>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
+                        Save components
+                    </MudButton>
+                </MudPaper>
+            </MudItem>
 
-        <MudItem md="4">
-            <MudPaper Class="mt-8 pa-8" Elevation="3" Style="position: sticky; top: 10vh;">
+            <MudItem md="4">
                 <BuildTimeline CurrentItem="BuildTimelineItem.Components" />
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
-</EditForm>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+}

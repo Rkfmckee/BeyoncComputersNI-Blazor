@@ -8,4 +8,6 @@ public interface IBuildService
 
     Task<int> CreateBuild();
     Task AddComponents(BuildComponentsViewModel buildComponents);
+    Task AddPeripherals(BuildPeripheralsViewModel buildPeripherals);
+    Task<bool> BuildExists(int id);
 }

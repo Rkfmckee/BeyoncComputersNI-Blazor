@@ -9,7 +9,7 @@ public abstract class BaseController : ControllerBase
     protected ActionResult OkOrNotFound(bool successful, string errorMessage = "")
     {
         if (successful)
-            return Ok();
+            return Ok(successful);
         else
             return NotFound(errorMessage);
     }
@@ -25,7 +25,7 @@ public abstract class BaseController : ControllerBase
     protected ActionResult OkOrUnauthorized(bool successful, string errorMessage = "")
     {
         if (successful)
-            return Ok();
+            return Ok(successful);
         else
             return Unauthorized(errorMessage);
     }
@@ -41,7 +41,7 @@ public abstract class BaseController : ControllerBase
     protected ActionResult OkOrError(bool successful, string errorMessage = "")
     {
         if (successful)
-            return Ok();
+            return Ok(successful);
         else
             return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
     }

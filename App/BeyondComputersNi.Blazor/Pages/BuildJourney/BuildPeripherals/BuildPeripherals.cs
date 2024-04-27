@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
-namespace BeyondComputersNi.Blazor.Pages.BuildJourney.BuildComponents;
+namespace BeyondComputersNi.Blazor.Pages.BuildJourney.BuildPeripherals;
 
-public partial class BuildComponents : Form
+public partial class BuildPeripherals : Form
 {
-    public const string PageUrl = "/Build/{id:int}/Components";
+    public const string PageUrl = "/Build/{id:int}/Peripherals";
 
     [Parameter]
     public int Id { get; set; }
@@ -23,7 +23,7 @@ public partial class BuildComponents : Form
     [Inject]
     private IBuildService? BuildService { get; set; }
 
-    private BuildComponentsViewModel? BuildComponentsViewModel { get; set; }
+    private BuildPeripheralsViewModel? BuildPeripheralsViewModel { get; set; }
     private bool LoadingForm { get; set; }
     private bool Submitting { get; set; }
 
@@ -34,8 +34,8 @@ public partial class BuildComponents : Form
         if (!await BuildService!.BuildExists(Id))
             NavigationManager!.NavigateTo("");
 
-        BuildComponentsViewModel = new BuildComponentsViewModel(Id);
-        InitializeForm(BuildComponentsViewModel);
+        BuildPeripheralsViewModel = new BuildPeripheralsViewModel(Id);
+        InitializeForm(BuildPeripheralsViewModel);
 
         LoadingForm = false;
     }
@@ -47,9 +47,9 @@ public partial class BuildComponents : Form
 
         try
         {
-            await BuildService!.AddComponents(BuildComponentsViewModel!);
-            NavigationManager!.NavigateTo(BuildComponentsViewModel!.PeripheralsUrl);
-            Snackbar?.Add("Components added successfully", Severity.Success);
+            await BuildService!.AddPeripherals(BuildPeripheralsViewModel!);
+            //NavigationManager!.NavigateTo("");
+            Snackbar?.Add("Peripherals added successfully", Severity.Success);
         }
         catch (Exception ex)
         {
