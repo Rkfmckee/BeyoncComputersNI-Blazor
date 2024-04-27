@@ -1,6 +1,9 @@
-﻿namespace BeyondComputersNi.Services.Interfaces;
+﻿using BeyondComputersNi.Services.DataTransferObjects.Build;
+
+namespace BeyondComputersNi.Services.Interfaces;
 
 public interface IBuildService
 {
-    Task<int> CreateBuild();
+    Task<bool> AddComponents(BuildComponentsDto buildComponents);
+    Task<int?> CreateBuild();
 }

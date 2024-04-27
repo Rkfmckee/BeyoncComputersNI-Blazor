@@ -2,6 +2,7 @@
 
 public class BuildComponentsViewModel
 {
+    public int Id { get; set; }
     public string? Motherboard { get; set; }
     public string? CPU { get; set; }
     public string? CPUCooler { get; set; }

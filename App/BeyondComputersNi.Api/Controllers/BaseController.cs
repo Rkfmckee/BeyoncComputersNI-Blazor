@@ -6,10 +6,10 @@ namespace BeyondComputersNi.Api.Controllers;
 public abstract class BaseController : ControllerBase
 {
 
-    protected ActionResult OkOrNotFound(bool successful, string okMessage = "", string errorMessage = "")
+    protected ActionResult OkOrNotFound(bool successful, string errorMessage = "")
     {
         if (successful)
-            return Ok(okMessage);
+            return Ok();
         else
             return NotFound(errorMessage);
     }
@@ -22,10 +22,10 @@ public abstract class BaseController : ControllerBase
             return Ok(item);
     }
 
-    protected ActionResult OkOrUnauthorized(bool successful, string okMessage = "", string errorMessage = "")
+    protected ActionResult OkOrUnauthorized(bool successful, string errorMessage = "")
     {
         if (successful)
-            return Ok(okMessage);
+            return Ok();
         else
             return Unauthorized(errorMessage);
     }
@@ -38,10 +38,10 @@ public abstract class BaseController : ControllerBase
             return Ok(item);
     }
 
-    protected ActionResult OkOrError(bool successful, string okMessage = "", string errorMessage = "")
+    protected ActionResult OkOrError(bool successful, string errorMessage = "")
     {
         if (successful)
-            return Ok(okMessage);
+            return Ok();
         else
             return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
     }
@@ -60,5 +60,13 @@ public abstract class BaseController : ControllerBase
             return Created();
         else
             return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
+    }
+
+    protected ActionResult NoContentOrBadRequest(bool successful, string errorMessage = "")
+    {
+        if (successful)
+            return NoContent();
+        else
+            return BadRequest(errorMessage);
     }
 }

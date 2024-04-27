@@ -1,5 +1,7 @@
-﻿using BeyondComputersNi.Dal.Entities;
+﻿using AutoMapper;
+using BeyondComputersNi.Dal.Entities;
 using BeyondComputersNi.Dal.Interfaces;
+using BeyondComputersNi.Services.DataTransferObjects.Build;
 using BeyondComputersNi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,9 +9,9 @@ using System.Text.RegularExpressions;
 
 namespace BeyondComputersNi.Services.Services;
 
-public class BuildService(IRepository<Build> buildRepository, IConfiguration configuration) : IBuildService
+public class BuildService(IRepository<Build> buildRepository, IConfiguration configuration, IMapper mapper) : IBuildService
 {
-    public async Task<int> CreateBuild()
+    public async Task<int?> CreateBuild()
     {
         var identifier = await GetIdentifier();
 
@@ -22,6 +24,17 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         await buildRepository.SaveChangesAsync();
 
         return build.Id;
+    }
+
+    public async Task<bool> AddComponents(BuildComponentsDto buildComponents)
+    {
+        var build = await buildRepository.Get().SingleOrDefaultAsync(b => b.Id == buildComponents.Id);
+        if (build == null) return false;
+
+        mapper.Map(buildComponents, build);
+        await buildRepository.SaveChangesAsync();
+
+        return true;
     }
 
     #region Helpers
