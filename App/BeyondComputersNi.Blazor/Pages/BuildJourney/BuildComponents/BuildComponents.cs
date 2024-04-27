@@ -23,8 +23,6 @@ public partial class BuildComponents : Form
 
     protected override void OnInitialized()
     {
-        //if (AuthenticationService is null) NavigationManager!.NavigateTo(Error.PageUrl);
-
         BuildComponentsViewModel = new BuildComponentsViewModel();
         InitializeForm(BuildComponentsViewModel);
     }

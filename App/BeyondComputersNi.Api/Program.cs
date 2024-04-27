@@ -73,9 +73,10 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<IDataGenerator, DataGenerator>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IComputerService, ComputerService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IComputerService, ComputerService>();
+builder.Services.AddScoped<IBuildService, BuildService>();
 
 var app = builder.Build();
 
