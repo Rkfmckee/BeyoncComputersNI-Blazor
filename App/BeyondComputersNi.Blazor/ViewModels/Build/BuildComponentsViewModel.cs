@@ -4,6 +4,13 @@ namespace BeyondComputersNi.Blazor.ViewModels.Build;
 
 public class BuildComponentsViewModel
 {
+    public BuildComponentsViewModel(int id)
+    {
+        Id = id;
+    }
+
+    public int Id { get; set; }
+
     public string? SelectMotherboard { get; set; }
     public string? EnterMotherboard { get; set; }
 

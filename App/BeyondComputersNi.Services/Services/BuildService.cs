@@ -11,6 +11,11 @@ namespace BeyondComputersNi.Services.Services;
 
 public class BuildService(IRepository<Build> buildRepository, IConfiguration configuration, IMapper mapper) : IBuildService
 {
+    public Task<bool> BuildExists(int id)
+    {
+        return buildRepository.Get().AnyAsync(x => x.Id == id);
+    }
+
     public async Task<int?> CreateBuild()
     {
         var identifier = await GetIdentifier();

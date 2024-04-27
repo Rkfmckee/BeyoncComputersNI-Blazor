@@ -19,10 +19,14 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
     }
 
     [HttpPut("components")]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<ActionResult<int>> AddComponents(BuildComponentsViewModel buildComponents)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> AddComponents(BuildComponentsViewModel buildComponents)
     {
+        if (!await buildService.BuildExists(buildComponents.Id))
+            return NotFound("Your build does not exist, please create a new one.");
+
         return NoContentOrBadRequest(
             await buildService.AddComponents(mapper.Map<BuildComponentsDto>(buildComponents)),
             "Components could not be added, please try again.");

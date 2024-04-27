@@ -21,7 +21,7 @@ public abstract class HttpService(IHttpClientFactory httpClientFactory, IConfigu
 
     protected async Task<T> PostAsync<T>(string url, object requestBody)
     {
-        var response = await httpClient.PostAsync($"{BaseUrl}/{url}", JsonContent.Create(requestBody));
+        var response = await httpClient.PostAsJsonAsync($"{BaseUrl}/{url}", requestBody);
         if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
 
         var content = await response.Content.ReadFromJsonAsync<T>();
@@ -32,7 +32,7 @@ public abstract class HttpService(IHttpClientFactory httpClientFactory, IConfigu
 
     protected async Task<T> PostAsync<T>(string url)
     {
-        var response = await httpClient.PostAsync($"{BaseUrl}/{url}", null);
+        var response = await httpClient.PostAsJsonAsync($"{BaseUrl}/{url}", (object?)null);
         if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
 
         var content = await response.Content.ReadFromJsonAsync<T>();
@@ -43,13 +43,13 @@ public abstract class HttpService(IHttpClientFactory httpClientFactory, IConfigu
 
     protected async Task PostAsync(string url, object requestBody)
     {
-        var response = await httpClient.PostAsync($"{BaseUrl}/{url}", JsonContent.Create(requestBody));
+        var response = await httpClient.PostAsJsonAsync($"{BaseUrl}/{url}", requestBody);
         if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
     }
 
-    protected async Task PostAsync(string url)
+    protected async Task PutAsync(string url, object requestBody)
     {
-        var response = await httpClient.PostAsync($"{BaseUrl}/{url}", null);
+        var response = await httpClient.PutAsJsonAsync($"{BaseUrl}/{url}", requestBody);
         if (!response.IsSuccessStatusCode) await ThrowErrorMessage(response);
     }
 
