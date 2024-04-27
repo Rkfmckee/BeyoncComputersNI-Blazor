@@ -1,7 +1,7 @@
 ﻿using BeyondComputersNi.Shared.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace BeyondComputersNi.Shared.ViewModels.Authentication;
+namespace BeyondComputersNi.Blazor.ViewModels.Authentication;
 
 public class RegisterViewModel
 {

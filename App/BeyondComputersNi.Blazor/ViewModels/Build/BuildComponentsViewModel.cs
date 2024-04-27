@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BeyondComputersNi.Shared.ViewModels.Build;
+namespace BeyondComputersNi.Blazor.ViewModels.Build;
 
 public class BuildComponentsViewModel
 {

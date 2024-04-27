@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace BeyondComputersNi.Shared.Attributes;
-internal class EmailAttribute : RegularExpressionAttribute
+
+public class EmailAttribute : RegularExpressionAttribute
 {
     public EmailAttribute() : base(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$")
     {

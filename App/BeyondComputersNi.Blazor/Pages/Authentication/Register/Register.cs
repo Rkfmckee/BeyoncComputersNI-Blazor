@@ -1,7 +1,7 @@
 ﻿using BeyondComputersNi.Blazor.Components;
 using BeyondComputersNi.Blazor.Interfaces.Authentication;
 using BeyondComputersNi.Blazor.Pages.Status;
-using BeyondComputersNi.Shared.ViewModels.Authentication;
+using BeyondComputersNi.Blazor.ViewModels.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;

@@ -1,4 +1,4 @@
-﻿namespace BeyondComputersNi.Shared.ViewModels;
+﻿namespace BeyondComputersNi.Blazor.ViewModels;
 
 public class ComputerViewModel
 {

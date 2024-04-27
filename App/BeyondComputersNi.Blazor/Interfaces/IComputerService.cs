@@ -1,4 +1,4 @@
-﻿using BeyondComputersNi.Shared.ViewModels;
+﻿using BeyondComputersNi.Blazor.ViewModels;
 
 namespace BeyondComputersNi.Blazor.Interfaces;
 public interface IComputerService

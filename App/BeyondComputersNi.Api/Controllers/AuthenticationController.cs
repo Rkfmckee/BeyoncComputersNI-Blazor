@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using BeyondComputersNi.Api.ViewModels.Authentication;
 using BeyondComputersNi.Services.DataTransferObjects;
 using BeyondComputersNi.Services.DataTransferObjects.Authentication;
 using BeyondComputersNi.Services.Interfaces;
-using BeyondComputersNi.Shared.ViewModels.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeyondComputersNi.Api.Controllers;

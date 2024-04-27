@@ -1,5 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Components;
-using BeyondComputersNi.Shared.ViewModels.Build;
+using BeyondComputersNi.Blazor.ViewModels.Build;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;

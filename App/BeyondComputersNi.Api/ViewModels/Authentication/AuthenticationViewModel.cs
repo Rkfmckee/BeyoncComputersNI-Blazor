@@ -1,4 +1,4 @@
-﻿namespace BeyondComputersNi.Shared.ViewModels.Authentication;
+﻿namespace BeyondComputersNi.Api.ViewModels.Authentication;
 
 public class AuthenticationViewModel
 {

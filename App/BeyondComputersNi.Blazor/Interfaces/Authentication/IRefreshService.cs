@@ -1,4 +1,4 @@
-﻿using BeyondComputersNi.Shared.ViewModels.Authentication;
+﻿using BeyondComputersNi.Blazor.ViewModels.Authentication;
 
 namespace BeyondComputersNi.Blazor.Interfaces.Authentication;
 public interface IRefreshService

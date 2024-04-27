@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace BeyondComputersNi.Blazor.Pages.BuildJourney.Components.BuildTimeline;
+namespace BeyondComputersNi.Blazor.Pages.BuildJourney.BuildTimeline;
 
 public partial class BuildTimeline
 {

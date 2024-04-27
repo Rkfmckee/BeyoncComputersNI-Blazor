@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using BeyondComputersNi.Api.ViewModels;
 using BeyondComputersNi.Services.Interfaces;
-using BeyondComputersNi.Shared.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

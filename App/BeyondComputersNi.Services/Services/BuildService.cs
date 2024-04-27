@@ -12,11 +12,10 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
     public async Task<int> CreateBuild()
     {
         var identifier = await GetIdentifier();
-        var buildNumber = CurrentBuildNumber.Replace("identifier", $"{identifier}");
 
         var build = new Build
         {
-            BuildNumber = buildNumber,
+            BuildNumber = CurrentBuildNumber.Replace("identifier", $"{identifier}"),
         };
 
         await buildRepository.AddAsync(build);

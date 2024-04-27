@@ -1,4 +1,4 @@
-﻿namespace BeyondComputersNi.Shared.ViewModels.Build;
+﻿namespace BeyondComputersNi.Blazor.ViewModels.Build;
 
 public class BuildViewModel
 {
