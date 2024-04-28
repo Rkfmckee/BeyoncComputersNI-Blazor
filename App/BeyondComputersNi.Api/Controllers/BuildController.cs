@@ -11,10 +11,17 @@ namespace BeyondComputersNi.Api.Controllers;
 public class BuildController(IBuildService buildService, IMapper mapper) : BaseController
 {
     [HttpGet("Exists/{id}")]
-    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<ActionResult<int>> BuildExists(int id)
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    public async Task<ActionResult<bool>> BuildExists(int id)
     {
         return Ok(await buildService.BuildExists(id));
+    }
+
+    [HttpGet("Number/{id}")]
+    [ProducesResponseType(typeof(BuildNumberViewModel), StatusCodes.Status200OK)]
+    public async Task<ActionResult<BuildNumberViewModel>> GetBuildNumber(int id)
+    {
+        return Ok(new BuildNumberViewModel(await buildService.GetBuildNumber(id)));
     }
 
     [HttpPost("Create")]

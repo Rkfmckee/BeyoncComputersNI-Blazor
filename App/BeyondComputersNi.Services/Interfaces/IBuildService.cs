@@ -9,4 +9,5 @@ public interface IBuildService
     Task<bool> AddComponents(BuildComponentsDto buildComponents);
     Task<bool> AddPeripherals(BuildPeripheralsDto buildPeripherals);
     Task<bool> FinishBuild(BuildFinishDto buildFinish);
+    Task<string?> GetBuildNumber(int id);
 }

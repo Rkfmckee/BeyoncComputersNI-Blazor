@@ -6,9 +6,10 @@ public interface IBuildService
 {
     string BaseUrl { get; }
 
+    Task<bool> BuildExists(int id);
+    Task<BuildNumberViewModel?> GetBuildNumber(int id);
     Task<int> CreateBuild();
     Task AddComponents(BuildComponentsViewModel buildComponents);
     Task AddPeripherals(BuildPeripheralsViewModel buildPeripherals);
-    Task<bool> BuildExists(int id);
     Task FinishBuild(BuildFinishViewModel buildFinish);
 }

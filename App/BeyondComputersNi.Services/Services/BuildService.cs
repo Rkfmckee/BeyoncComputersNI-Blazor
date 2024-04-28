@@ -13,7 +13,12 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
 {
     public Task<bool> BuildExists(int id)
     {
-        return buildRepository.Get().AnyAsync(x => x.Id == id);
+        return buildRepository.Get().AnyAsync(b => b.Id == id);
+    }
+
+    public Task<string?> GetBuildNumber(int id)
+    {
+        return buildRepository.Get().Where(b => b.Id == id).Select(b => b.BuildNumber).SingleOrDefaultAsync();
     }
 
     public async Task<int?> CreateBuild()

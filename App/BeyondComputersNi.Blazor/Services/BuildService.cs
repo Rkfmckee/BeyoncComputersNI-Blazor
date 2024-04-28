@@ -11,6 +11,9 @@ public class BuildService(IHttpClientFactory httpClientFactory, IConfiguration c
     public async Task<bool> BuildExists(int id) =>
         await GetAsync<bool>($"Exists/{id}");
 
+    public async Task<BuildNumberViewModel?> GetBuildNumber(int id) =>
+    await GetAsync<BuildNumberViewModel?>($"Number/{id}");
+
     public async Task<int> CreateBuild() =>
         await PostAsync<int>("Create");
 

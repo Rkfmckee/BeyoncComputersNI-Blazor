@@ -29,6 +29,7 @@ public partial class BuildFinish : Form
     private IBuildService? BuildService { get; set; }
 
     private BuildFinishViewModel? BuildFinishViewModel { get; set; }
+    private string? BuildNumber { get; set; } = "BLD/0000/00/00/0";
     private bool LoadingForm { get; set; }
     private bool Submitting { get; set; }
 
@@ -38,6 +39,9 @@ public partial class BuildFinish : Form
 
         if (!await BuildService!.BuildExists(Id))
             NavigationManager!.NavigateTo("");
+
+        var buildNumber = await BuildService.GetBuildNumber(Id);
+        if (!string.IsNullOrEmpty(buildNumber?.Value)) BuildNumber = buildNumber.Value;
 
         BuildFinishViewModel = new BuildFinishViewModel(Id);
         InitializeForm(BuildFinishViewModel);
