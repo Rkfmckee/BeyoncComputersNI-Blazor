@@ -10,5 +10,6 @@ public class BuildProfile : Profile
     {
         CreateMap<BuildComponentsViewModel, BuildComponentsDto>();
         CreateMap<BuildPeripheralsViewModel, BuildPeripheralsDto>();
+        CreateMap<BuildFinishViewModel, BuildFinishDto>();
     }
 }

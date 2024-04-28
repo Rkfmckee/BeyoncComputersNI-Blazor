@@ -48,7 +48,7 @@ public partial class BuildPeripherals : Form
         try
         {
             await BuildService!.AddPeripherals(BuildPeripheralsViewModel!);
-            //NavigationManager!.NavigateTo("");
+            NavigationManager!.NavigateTo(BuildPeripheralsViewModel!.FinishUrl);
             Snackbar?.Add("Peripherals added successfully", Severity.Success);
         }
         catch (Exception ex)

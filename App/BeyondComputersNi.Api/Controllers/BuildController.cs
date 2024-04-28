@@ -52,4 +52,18 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
             await buildService.AddPeripherals(mapper.Map<BuildPeripheralsDto>(buildPeripherals)),
             "Peripherals could not be added, please try again.");
     }
+
+    [HttpPut("Finish")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> FinishBuild(BuildFinishViewModel buildFinish)
+    {
+        if (!await buildService.BuildExists(buildFinish.Id))
+            return NotFound("Your build does not exist, please create a new one.");
+
+        return NoContentOrBadRequest(
+            await buildService.FinishBuild(mapper.Map<BuildFinishDto>(buildFinish)),
+            "Build could not be finished, please try again.");
+    }
 }

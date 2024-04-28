@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildFinish;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeyondComputersNi.Blazor.ViewModels.Build;
 
@@ -10,6 +11,7 @@ public class BuildPeripheralsViewModel
     }
 
     public int Id { get; set; }
+    public string FinishUrl => BuildFinish.PageUrl.Replace("{id:int}", Id.ToString());
 
     public string? SelectCase { get; set; }
     public string? EnterCase { get; set; }

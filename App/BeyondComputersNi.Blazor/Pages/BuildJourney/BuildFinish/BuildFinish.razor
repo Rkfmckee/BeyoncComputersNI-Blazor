@@ -1,0 +1,63 @@
+﻿@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildSkeleton
+@using BeyondComputersNi.Blazor.Pages.BuildJourney.BuildTimeline
+
+@attribute [Route(PageUrl)]
+@inherits Form
+
+@if (LoadingForm)
+{
+    <BuildSkeleton />
+}
+else
+{
+    <EditForm EditContext="@EditContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+        <DataAnnotationsValidator />
+
+        <MudGrid Class="mb-6">
+            <MudItem md="8">
+                <MudPaper Class="mt-8 pa-8" Elevation="3">
+                    <MudText Typo="Typo.h2" Align="Align.Center">Build your computer</MudText>
+                    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Finish</MudText>
+
+                    @if (HasErrors)
+                    {
+                        <FormValidationErrors />
+                    }
+
+                    <MudText Typo="Typo.body1">Your build number is</MudText>
+                    <MudText Typo="Typo.h3" GutterBottom=true>BLD/0000/00/00/1</MudText>
+
+                    <AuthorizeView>
+                        <Authorized Context="authContext">
+                            <MudAlert Severity="Severity.Info">
+                                This build will be added to your account, so you can access it easier.
+                            </MudAlert>
+                        </Authorized>
+                        <NotAuthorized Context="authContext">
+                            <MudAlert Severity="Severity.Info">
+                                As you are not signed in, your build number/unique name are the only ways to identify your build.
+                                Please keep track of them.
+                            </MudAlert>
+                        </NotAuthorized>
+                    </AuthorizeView>
+
+                    <MudTextField @bind-Value="BuildFinishViewModel!.Identifier" Label="Identify your build" 
+                        HelperText="If you want, you can give your build a unique name so you can identify it later" />
+
+                    @if (Submitting)
+                    {
+                        <LoadingSpinner />
+                    }
+
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6">
+                        Complete build
+                    </MudButton>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem md="4">
+                <BuildTimeline CurrentItem="BuildTimelineItem.Finish" />
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+}

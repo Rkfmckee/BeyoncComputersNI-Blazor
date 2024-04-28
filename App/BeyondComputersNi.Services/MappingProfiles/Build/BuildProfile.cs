@@ -14,5 +14,9 @@ public class BuildProfile : Profile
         CreateMap<BuildPeripheralsDto, Dal.Entities.Build>()
             .ForMember(dest => dest.Id,
                 opt => opt.Ignore());
+
+        CreateMap<BuildFinishDto, Dal.Entities.Build>()
+            .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
     }
 }

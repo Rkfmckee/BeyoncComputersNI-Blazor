@@ -19,4 +19,7 @@ public class BuildService(IHttpClientFactory httpClientFactory, IConfiguration c
 
     public async Task AddPeripherals(BuildPeripheralsViewModel buildPeripherals) =>
         await PutAsync("Peripherals", buildPeripherals);
+
+    public async Task FinishBuild(BuildFinishViewModel buildFinish) =>
+        await PutAsync("Finish", buildFinish);
 }

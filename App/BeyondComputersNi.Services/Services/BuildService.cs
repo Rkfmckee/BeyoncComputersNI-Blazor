@@ -53,6 +53,17 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         return true;
     }
 
+    public async Task<bool> FinishBuild(BuildFinishDto buildFinish)
+    {
+        var build = await buildRepository.Get().SingleOrDefaultAsync(b => b.Id == buildFinish.Id);
+        if (build == null) return false;
+
+        mapper.Map(buildFinish, build);
+        await buildRepository.SaveChangesAsync();
+
+        return true;
+    }
+
     #region Helpers
 
     private const string regexCapture = "(.*)";

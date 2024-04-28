@@ -55,7 +55,7 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
 
         var user = await userRepository.Get().SingleOrDefaultAsync(u => u.Email == email);
 
-        if (user is null || 
+        if (user is null ||
             user.RefreshToken != refreshDto.RefreshToken ||
             refreshToken.ValidTo < DateTime.UtcNow ||
             authToken.ValidTo > DateTime.UtcNow)
@@ -111,6 +111,7 @@ public class AuthenticationService(IRepository<User> userRepository, IConfigurat
 
         if (user is null) return claims;
 
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
         claims.Add(new Claim(ClaimTypes.Email, user.Email));
         if (!string.IsNullOrEmpty(user.Name)) claims.Add(new Claim(ClaimTypes.Name, user.Name));
 
