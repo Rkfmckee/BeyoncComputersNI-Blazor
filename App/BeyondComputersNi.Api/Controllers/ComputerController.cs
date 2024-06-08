@@ -14,6 +14,6 @@ public class ComputerController(IComputerService computerService, IMapper mapper
     [Authorize]
     public async Task<ActionResult<List<ComputerViewModel>>> GetAllComputers()
     {
-        return mapper.Map<List<ComputerViewModel>>(await computerService.GetAllComputers());
+        return mapper.Map<List<ComputerViewModel>>(await computerService.GetAllComputersAsync());
     }
 }

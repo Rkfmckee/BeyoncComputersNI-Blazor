@@ -11,17 +11,17 @@ namespace BeyondComputersNi.Services.Services;
 
 public class BuildService(IRepository<Build> buildRepository, IConfiguration configuration, IMapper mapper) : IBuildService
 {
-    public Task<bool> BuildExists(int id)
+    public Task<bool> BuildExistsAsync(int id)
     {
         return buildRepository.Get().AnyAsync(b => b.Id == id);
     }
 
-    public Task<string?> GetBuildNumber(int id)
+    public Task<string?> GetBuildNumberAsync(int id)
     {
         return buildRepository.Get().Where(b => b.Id == id).Select(b => b.BuildNumber).SingleOrDefaultAsync();
     }
 
-    public async Task<int?> CreateBuild()
+    public async Task<int?> CreateBuildAsync()
     {
         var identifier = await GetIdentifier();
 
@@ -36,7 +36,23 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         return build.Id;
     }
 
-    public async Task<bool> AddComponents(BuildComponentsDto buildComponents)
+    public async Task<IEnumerable<string>> GetComponentsAsync(string componentName, string? value = null)
+    {
+        // Get values from db eventually
+
+        var components = new List<string>();
+
+        for (int i = 0; i < 10; i++)
+        {
+            components.Add($"{componentName} {i}");
+        }
+
+        return string.IsNullOrWhiteSpace(value) ?
+            components :
+            components.Where(c => c.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public async Task<bool> AddComponentsAsync(BuildComponentsDto buildComponents)
     {
         var build = await buildRepository.Get().SingleOrDefaultAsync(b => b.Id == buildComponents.Id);
         if (build == null) return false;
@@ -47,7 +63,7 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         return true;
     }
 
-    public async Task<bool> AddPeripherals(BuildPeripheralsDto buildPeripherals)
+    public async Task<bool> AddPeripheralsAsync(BuildPeripheralsDto buildPeripherals)
     {
         var build = await buildRepository.Get().SingleOrDefaultAsync(b => b.Id == buildPeripherals.Id);
         if (build == null) return false;
@@ -58,7 +74,7 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         return true;
     }
 
-    public async Task<bool> FinishBuild(BuildFinishDto buildFinish)
+    public async Task<bool> FinishBuildAsync(BuildFinishDto buildFinish)
     {
         var build = await buildRepository.Get().SingleOrDefaultAsync(b => b.Id == buildFinish.Id);
         if (build == null) return false;

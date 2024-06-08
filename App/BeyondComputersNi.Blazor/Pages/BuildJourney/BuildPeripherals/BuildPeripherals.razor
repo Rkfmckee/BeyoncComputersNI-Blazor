@@ -24,38 +24,25 @@ else
                         <FormValidationErrors />
                     }
 
-                    <MudExpansionPanels Class="pt-4" MultiExpansion="true">
-                        <MudExpansionPanel Text="Case">
-                            <SelectOrEnterFields Label="Case"
-                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectCase"
-                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterCase"
-                            For="@(() => BuildPeripheralsViewModel!.Case)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Keyboard">
-                            <SelectOrEnterFields Label="Keyboard"
-                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectKeyboard"
-                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterKeyboard"
-                            For="@(() => BuildPeripheralsViewModel!.Keyboard)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Mouse">
-                            <SelectOrEnterFields Label="Mouse"
-                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectMouse"
-                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterMouse"
-                            For="@(() => BuildPeripheralsViewModel!.Mouse)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Monitor">
-                            <SelectOrEnterFields Label="Monitor"
-                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectMonitor"
-                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterMonitor"
-                            For="@(() => BuildPeripheralsViewModel!.Monitor)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Speakers">
-                            <SelectOrEnterFields Label="Speakers"
-                            @bind-SelectValue="@BuildPeripheralsViewModel!.SelectSpeakers"
-                            @bind-EnterValue="@BuildPeripheralsViewModel!.EnterSpeakers"
-                            For="@(() => BuildPeripheralsViewModel!.Speakers)" />
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
+                    <MudAutocomplete T="string" @bind-Value="@BuildPeripheralsViewModel!.Case" Label="Case"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildPeripheralsViewModel.Case), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildPeripheralsViewModel!.Case" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildPeripheralsViewModel!.Keyboard" Label="Keyboard"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildPeripheralsViewModel.Keyboard), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildPeripheralsViewModel!.Keyboard" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildPeripheralsViewModel!.Mouse" Label="Mouse"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildPeripheralsViewModel.Mouse), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildPeripheralsViewModel!.Mouse" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildPeripheralsViewModel!.Monitor" Label="Monitor"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildPeripheralsViewModel.Monitor), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildPeripheralsViewModel!.Monitor" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildPeripheralsViewModel!.Speakers" Label="Speakers"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildPeripheralsViewModel.Speakers), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildPeripheralsViewModel!.Speakers" />
 
                     @if (Submitting)
                     {

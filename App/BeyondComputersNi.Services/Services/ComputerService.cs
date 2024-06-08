@@ -10,7 +10,7 @@ namespace BeyondComputersNi.Services.Services;
 public class ComputerService(IRepository<Computer> computerRepo, IMapper mapper) : IComputerService
 {
     [Authorize]
-    public Task<List<ComputerDto>> GetAllComputers()
+    public Task<List<ComputerDto>> GetAllComputersAsync()
     {
         return mapper.ProjectTo<ComputerDto>(computerRepo.Get()).ToListAsync();
     }

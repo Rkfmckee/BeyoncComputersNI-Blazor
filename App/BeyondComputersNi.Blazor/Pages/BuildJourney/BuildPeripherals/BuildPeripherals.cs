@@ -31,7 +31,7 @@ public partial class BuildPeripherals : Form
     {
         LoadingForm = true;
 
-        if (!await BuildService!.BuildExists(Id))
+        if (!await BuildService!.BuildExistsAsync(Id))
             NavigationManager!.NavigateTo("");
 
         BuildPeripheralsViewModel = new BuildPeripheralsViewModel(Id);
@@ -47,7 +47,7 @@ public partial class BuildPeripherals : Form
 
         try
         {
-            await BuildService!.AddPeripherals(BuildPeripheralsViewModel!);
+            await BuildService!.AddPeripheralsAsync(BuildPeripheralsViewModel!);
             NavigationManager!.NavigateTo(BuildPeripheralsViewModel!.FinishUrl);
             Snackbar?.Add("Peripherals added successfully", Severity.Success);
         }

@@ -24,50 +24,33 @@ else
                         <FormValidationErrors />
                     }
 
-                    <MudExpansionPanels Class="pt-4" MultiExpansion="true">
-                        <MudExpansionPanel Text="Motherboard">
-                            <SelectOrEnterFields Label="Motherboard"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectMotherboard"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterMotherboard"
-                                                 For="@(() => BuildComponentsViewModel!.Motherboard)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="CPU">
-                            <SelectOrEnterFields Label="CPU"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectCPU"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterCPU"
-                                                 For="@(() => BuildComponentsViewModel!.CPU)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="CPUCooler">
-                            <SelectOrEnterFields Label="CPUCooler"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectCPUCooler"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterCPUCooler"
-                                                 For="@(() => BuildComponentsViewModel!.CPUCooler)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Memory">
-                            <SelectOrEnterFields Label="Memory"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectMemory"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterMemory"
-                                                 For="@(() => BuildComponentsViewModel!.Memory)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Storage">
-                            <SelectOrEnterFields Label="Storage"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectStorage"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterStorage"
-                                                 For="@(() => BuildComponentsViewModel!.Storage)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="GPU">
-                            <SelectOrEnterFields Label="GPU"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectGPU"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterGPU"
-                                                 For="@(() => BuildComponentsViewModel!.GPU)" />
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="PSU">
-                            <SelectOrEnterFields Label="PSU"
-                                                 @bind-SelectValue="@BuildComponentsViewModel!.SelectPSU"
-                                                 @bind-EnterValue="@BuildComponentsViewModel!.EnterPSU"
-                                                 For="@(() => BuildComponentsViewModel!.PSU)" />
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.Motherboard" Label="Motherboard"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.Motherboard), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.Motherboard" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.CPU" Label="CPU"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.CPU), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.CPU" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.CPUCooler" Label="CPU Cooler"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.CPUCooler), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.CPUCooler" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.Memory" Label="Memory"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.Memory), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.Memory" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.Storage" Label="Storage"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.Storage), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.Storage" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.GPU" Label="GPU"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.GPU), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.GPU" />
+
+                    <MudAutocomplete T="string" @bind-Value="@BuildComponentsViewModel!.PSU" Label="PSU"
+                                     SearchFunc="(string value) => BuildService!.GetComponentsAsync(nameof(BuildComponentsViewModel.PSU), value)"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="() => BuildComponentsViewModel!.PSU" />
 
                     @if (Submitting)
                     {

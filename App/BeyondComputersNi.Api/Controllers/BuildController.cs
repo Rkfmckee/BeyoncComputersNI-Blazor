@@ -14,14 +14,14 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     public async Task<ActionResult<bool>> BuildExists(int id)
     {
-        return Ok(await buildService.BuildExists(id));
+        return Ok(await buildService.BuildExistsAsync(id));
     }
 
     [HttpGet("Number/{id}")]
     [ProducesResponseType(typeof(BuildNumberViewModel), StatusCodes.Status200OK)]
     public async Task<ActionResult<BuildNumberViewModel>> GetBuildNumber(int id)
     {
-        return Ok(new BuildNumberViewModel(await buildService.GetBuildNumber(id)));
+        return Ok(new BuildNumberViewModel(await buildService.GetBuildNumberAsync(id)));
     }
 
     [HttpPost("Create")]
@@ -29,7 +29,14 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     public async Task<ActionResult<int>> CreateBuild()
     {
-        return OkOrError(await buildService.CreateBuild());
+        return OkOrError(await buildService.CreateBuildAsync());
+    }
+
+    [HttpGet("Components/{componentName}")]
+    [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<string>>> GetComponents(string componentName, [FromQuery] string? value = null)
+    {
+        return Ok(await buildService.GetComponentsAsync(componentName, value));
     }
 
     [HttpPut("Components")]
@@ -38,11 +45,11 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> AddComponents(BuildComponentsViewModel buildComponents)
     {
-        if (!await buildService.BuildExists(buildComponents.Id))
+        if (!await buildService.BuildExistsAsync(buildComponents.Id))
             return NotFound("Your build does not exist, please create a new one.");
 
         return NoContentOrBadRequest(
-            await buildService.AddComponents(mapper.Map<BuildComponentsDto>(buildComponents)),
+            await buildService.AddComponentsAsync(mapper.Map<BuildComponentsDto>(buildComponents)),
             "Components could not be added, please try again.");
     }
 
@@ -52,11 +59,11 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> AddPeripherals(BuildPeripheralsViewModel buildPeripherals)
     {
-        if (!await buildService.BuildExists(buildPeripherals.Id))
+        if (!await buildService.BuildExistsAsync(buildPeripherals.Id))
             return NotFound("Your build does not exist, please create a new one.");
 
         return NoContentOrBadRequest(
-            await buildService.AddPeripherals(mapper.Map<BuildPeripheralsDto>(buildPeripherals)),
+            await buildService.AddPeripheralsAsync(mapper.Map<BuildPeripheralsDto>(buildPeripherals)),
             "Peripherals could not be added, please try again.");
     }
 
@@ -66,11 +73,11 @@ public class BuildController(IBuildService buildService, IMapper mapper) : BaseC
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> FinishBuild(BuildFinishViewModel buildFinish)
     {
-        if (!await buildService.BuildExists(buildFinish.Id))
+        if (!await buildService.BuildExistsAsync(buildFinish.Id))
             return NotFound("Your build does not exist, please create a new one.");
 
         return NoContentOrBadRequest(
-            await buildService.FinishBuild(mapper.Map<BuildFinishDto>(buildFinish)),
+            await buildService.FinishBuildAsync(mapper.Map<BuildFinishDto>(buildFinish)),
             "Build could not be finished, please try again.");
     }
 }

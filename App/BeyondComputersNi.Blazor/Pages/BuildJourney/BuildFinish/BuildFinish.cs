@@ -37,10 +37,10 @@ public partial class BuildFinish : Form
     {
         LoadingForm = true;
 
-        if (!await BuildService!.BuildExists(Id))
+        if (!await BuildService!.BuildExistsAsync(Id))
             NavigationManager!.NavigateTo("");
 
-        var buildNumber = await BuildService.GetBuildNumber(Id);
+        var buildNumber = await BuildService.GetBuildNumberAsync(Id);
         if (!string.IsNullOrEmpty(buildNumber?.Value)) BuildNumber = buildNumber.Value;
 
         BuildFinishViewModel = new BuildFinishViewModel(Id);
@@ -58,7 +58,7 @@ public partial class BuildFinish : Form
 
         try
         {
-            await BuildService!.FinishBuild(BuildFinishViewModel!);
+            await BuildService!.FinishBuildAsync(BuildFinishViewModel!);
             NavigationManager!.NavigateTo("");
             Snackbar?.Add("Build complete", Severity.Success);
         }

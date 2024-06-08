@@ -20,7 +20,7 @@
     {
         try
         {
-            var id = await BuildService!.CreateBuild();
+            var id = await BuildService!.CreateBuildAsync();
             if (id == 0) throw new Exception("Error, please try again");
 
             var componentsUrl = BuildComponents.BuildComponents.PageUrl.Replace("{id:int}", id.ToString());

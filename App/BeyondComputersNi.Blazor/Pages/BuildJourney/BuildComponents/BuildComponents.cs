@@ -31,7 +31,7 @@ public partial class BuildComponents : Form
     {
         LoadingForm = true;
 
-        if (!await BuildService!.BuildExists(Id))
+        if (!await BuildService!.BuildExistsAsync(Id))
             NavigationManager!.NavigateTo("");
 
         BuildComponentsViewModel = new BuildComponentsViewModel(Id);
@@ -47,7 +47,7 @@ public partial class BuildComponents : Form
 
         try
         {
-            await BuildService!.AddComponents(BuildComponentsViewModel!);
+            await BuildService!.AddComponentsAsync(BuildComponentsViewModel!);
             NavigationManager!.NavigateTo(BuildComponentsViewModel!.PeripheralsUrl);
             Snackbar?.Add("Components added successfully", Severity.Success);
         }

@@ -8,21 +8,24 @@ public class BuildService(IHttpClientFactory httpClientFactory, IConfiguration c
 {
     public override string BaseUrl => "api/Build";
 
-    public async Task<bool> BuildExists(int id) =>
+    public async Task<bool> BuildExistsAsync(int id) =>
         await GetAsync<bool>($"Exists/{id}");
 
-    public async Task<BuildNumberViewModel?> GetBuildNumber(int id) =>
+    public async Task<BuildNumberViewModel?> GetBuildNumberAsync(int id) =>
     await GetAsync<BuildNumberViewModel?>($"Number/{id}");
 
-    public async Task<int> CreateBuild() =>
+    public async Task<int> CreateBuildAsync() =>
         await PostAsync<int>("Create");
 
-    public async Task AddComponents(BuildComponentsViewModel buildComponents) =>
+    public async Task<IEnumerable<string>> GetComponentsAsync(string componentName, string? value = null) =>
+        await GetAsync<IEnumerable<string>>($"Components/{componentName}?value={value}");
+
+    public async Task AddComponentsAsync(BuildComponentsViewModel buildComponents) =>
         await PutAsync("Components", buildComponents);
 
-    public async Task AddPeripherals(BuildPeripheralsViewModel buildPeripherals) =>
+    public async Task AddPeripheralsAsync(BuildPeripheralsViewModel buildPeripherals) =>
         await PutAsync("Peripherals", buildPeripherals);
 
-    public async Task FinishBuild(BuildFinishViewModel buildFinish) =>
+    public async Task FinishBuildAsync(BuildFinishViewModel buildFinish) =>
         await PutAsync("Finish", buildFinish);
 }

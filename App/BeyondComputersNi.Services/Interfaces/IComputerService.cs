@@ -3,5 +3,5 @@
 namespace BeyondComputersNi.Services.Interfaces;
 public interface IComputerService
 {
-    Task<List<ComputerDto>> GetAllComputers();
+    Task<List<ComputerDto>> GetAllComputersAsync();
 }
