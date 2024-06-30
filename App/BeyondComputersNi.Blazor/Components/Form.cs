@@ -18,7 +18,7 @@ public class Form : ComponentBase, IDisposable
     {
         if (EditContext is null) return;
 
-        HasErrors = EditContext?.GetValidationMessages().Any() ?? false;
+        HasErrors = EditContext.GetValidationMessages().Any();
         StateHasChanged();
     }
 

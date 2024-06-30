@@ -3,7 +3,7 @@
 namespace BeyondComputersNi.Dal.Interfaces;
 public interface IDataGenerator
 {
-    Computer GenerateComputer();
-    IEnumerable<Computer> GenerateComputers(int number);
+    Build GenerateBuild();
+    IEnumerable<Build> GenerateBuilds(int number);
     User GenerateUser();
 }

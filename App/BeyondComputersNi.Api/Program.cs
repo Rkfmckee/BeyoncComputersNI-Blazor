@@ -67,7 +67,7 @@ builder.Services.AddDbContext<BcniDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly, typeof(ComputerService).Assembly);
+builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly, typeof(BuildService).Assembly);
 
 builder.Services.AddHttpContextAccessor();
 
@@ -75,7 +75,6 @@ builder.Services.AddTransient<IDataGenerator, DataGenerator>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IComputerService, ComputerService>();
 builder.Services.AddScoped<IBuildService, BuildService>();
 
 var app = builder.Build();
@@ -87,7 +86,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 
 app.UseCors(options =>
 {

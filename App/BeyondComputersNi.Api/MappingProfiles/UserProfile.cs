@@ -4,9 +4,9 @@ using BeyondComputersNi.Services.DataTransferObjects;
 
 namespace BeyondComputersNi.Services.MappingProfiles;
 
-public class UserProfiles : Profile
+public class UserProfile : Profile
 {
-    public UserProfiles()
+    public UserProfile()
     {
         CreateMap<RegisterViewModel, UserDto>();
     }

@@ -1,4 +1,4 @@
-﻿using BeyondComputersNi.Dal.Entities;
+﻿using BeyondComputersNi.Services.DataTransferObjects.Build;
 
 namespace BeyondComputersNi.Services.DataTransferObjects;
 
@@ -8,5 +8,5 @@ public class UserDto
     public required string Password { get; set; }
     public string? Name { get; set; }
 
-    public List<Computer>? Computers { get; set; }
+    public List<BuildDto>? Builds { get; set; }
 }

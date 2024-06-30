@@ -7,5 +7,5 @@ public class User : Entity
     public string? Name { get; set; }
     public string? RefreshToken { get; set; }
 
-    public List<Computer>? Computers { get; set; }
+    public List<Build>? Computers { get; set; }
 }

@@ -22,7 +22,7 @@ public static class Seed
 
                 dbContext.Database.EnsureCreated();
 
-                SeedComputers();
+                SeedBuilds();
                 SeedUsers();
 
                 dbContext.SaveChanges();
@@ -32,18 +32,18 @@ public static class Seed
         return app;
     }
 
-    private static void SeedComputers()
+    private static void SeedBuilds()
     {
-        if (EntityHasValues<Computer>()) return;
+        if (CantAddItems<Build>()) return;
 
-        var computers = dataGenerator!.GenerateComputers(10);
+        var builds = dataGenerator!.GenerateBuilds(10);
 
-        dbContext!.Set<Computer>().AddRange(computers);
+        dbContext!.AddRange(builds);
     }
 
     private static void SeedUsers()
     {
-        if (EntityHasValues<User>()) return;
+        if (CantAddItems<User>()) return;
 
         var users = new List<User>
         {
@@ -61,13 +61,13 @@ public static class Seed
             }
         };
 
-        dbContext!.Set<User>().AddRange(users);
+        dbContext!.AddRange(users);
     }
 
-    private static bool EntityHasValues<T>() where T : Entity
+    private static bool CantAddItems<T>() where T : Entity
     {
-        var existingItems = dbContext!.Set<T>().FirstOrDefault();
-
-        return existingItems is not null;
+        return dbContext is null ||
+            dataGenerator is null ||
+            dbContext.Set<T>().Any();
     }
 }

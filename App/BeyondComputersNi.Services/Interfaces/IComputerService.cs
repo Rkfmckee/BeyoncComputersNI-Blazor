@@ -1,7 +1,7 @@
-﻿using BeyondComputersNi.Services.DataTransferObjects;
+﻿using BeyondComputersNi.Services.DataTransferObjects.Build;
 
 namespace BeyondComputersNi.Services.Interfaces;
 public interface IComputerService
 {
-    Task<List<ComputerDto>> GetAllComputersAsync();
+    Task<List<BuildDto>> GetAllComputersAsync();
 }

@@ -7,6 +7,8 @@ public class BuildProfile : Profile
 {
     public BuildProfile()
     {
+        CreateMap<Dal.Entities.Build, BuildDto>();
+
         CreateMap<BuildComponentsDto, Dal.Entities.Build>()
             .ForMember(dest => dest.Id,
                 opt => opt.Ignore());
