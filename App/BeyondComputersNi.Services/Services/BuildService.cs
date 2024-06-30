@@ -3,13 +3,17 @@ using BeyondComputersNi.Dal.Entities;
 using BeyondComputersNi.Dal.Interfaces;
 using BeyondComputersNi.Services.DataTransferObjects.Build;
 using BeyondComputersNi.Services.Interfaces;
+using BeyondComputersNi.Shared.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace BeyondComputersNi.Services.Services;
 
-public class BuildService(IRepository<Build> buildRepository, IConfiguration configuration, IMapper mapper) : IBuildService
+public class BuildService(IRepository<Build> buildRepository, IConfiguration configuration, IMapper mapper,
+    IHttpContextAccessor httpContextAccessor) : IBuildService
 {
     public Task<bool> BuildExistsAsync(int id)
     {
@@ -80,6 +84,12 @@ public class BuildService(IRepository<Build> buildRepository, IConfiguration con
         if (build == null) return false;
 
         mapper.Map(buildFinish, build);
+
+        var userIdClaim = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        var userId = userIdClaim != null ? userIdClaim.Value.ToNullableInt() : null;
+
+        build.UserId = userId;
+
         await buildRepository.SaveChangesAsync();
 
         return true;

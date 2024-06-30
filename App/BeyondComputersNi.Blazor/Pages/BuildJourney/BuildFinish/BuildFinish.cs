@@ -3,10 +3,8 @@ using BeyondComputersNi.Blazor.Extensions;
 using BeyondComputersNi.Blazor.Interfaces;
 using BeyondComputersNi.Blazor.ViewModels.Build;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
-using System.Security.Claims;
 
 namespace BeyondComputersNi.Blazor.Pages.BuildJourney.BuildFinish;
 
@@ -16,9 +14,6 @@ public partial class BuildFinish : Form
 
     [Parameter]
     public int Id { get; set; }
-
-    [CascadingParameter]
-    private Task<AuthenticationState>? AuthenticationState { get; set; }
 
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
@@ -60,8 +55,6 @@ public partial class BuildFinish : Form
         base.OnValidSubmit(context);
         Submitting = true;
 
-        await GetCurrentUserIdAsync();
-
         try
         {
             await BuildService!.FinishBuildAsync(BuildFinishViewModel!);
@@ -75,20 +68,5 @@ public partial class BuildFinish : Form
 
         Submitting = false;
         StateHasChanged();
-    }
-
-    private async Task GetCurrentUserIdAsync()
-    {
-        if (AuthenticationState is null || BuildFinishViewModel is null) return;
-
-        var authState = await AuthenticationState;
-        var user = authState?.User;
-
-        if (user?.Identity is null || !user.Identity.IsAuthenticated) return;
-
-        var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(userId)) return;
-
-        BuildFinishViewModel!.UserId = int.Parse(userId);
     }
 }
