@@ -35,8 +35,12 @@ else
                         </Authorized>
                         <NotAuthorized Context="authContext">
                             <MudAlert Severity="Severity.Info">
-                                As you are not signed in, your build number/unique name are the only ways to identify your build.
-                                Please keep track of them.
+                                <div>As you are not signed in, your build number/unique name are the only ways to identify your build, please take note of them.</div>
+                                <div>
+                                    Or
+                                    <MudButton Color="Color.Primary" OnClick="OnLoginButtonClicked" Class="p-0">Log in now</MudButton>
+                                    to save this build to your account.
+                                </div>
                             </MudAlert>
                         </NotAuthorized>
                     </AuthorizeView>

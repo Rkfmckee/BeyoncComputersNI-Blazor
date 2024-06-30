@@ -1,11 +1,9 @@
 ﻿@using BeyondComputersNi.Blazor.Extensions
 @using BeyondComputersNi.Blazor.Pages.Authentication.Login
 
-<RedirectTo PageUrl="@LoginUrl" />
+<RedirectTo PageUrl="@NavigationManager.LoginUrlWithRedirect()" />
 
 @code {
     [Inject]
     public NavigationManager? NavigationManager { get; set; }
-
-    public string LoginUrl => $"{Login.PageUrl}?redirectTo={NavigationManager!.UrlWithoutBase()}";
 }

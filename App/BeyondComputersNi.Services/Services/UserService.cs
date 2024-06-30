@@ -10,8 +10,10 @@ namespace BeyondComputersNi.Services.Services;
 
 public class UserService(IRepository<User> userRepo, IMapper mapper) : IUserService
 {
-    public Task<bool> UserExistsAsync(string email)
+    public Task<bool> UserExistsAsync(string? email)
     {
+        if (string.IsNullOrWhiteSpace(email)) return Task.FromResult(false);
+
         return userRepo.Get().Where(u => u.Email == email).AnyAsync();
     }
 
@@ -21,13 +23,15 @@ public class UserService(IRepository<User> userRepo, IMapper mapper) : IUserServ
             .ToListAsync();
     }
 
-    public Task<UserDto?> GetUserAsync(string email)
+    public Task<UserDto?> GetUserAsync(string? email)
     {
+        if (string.IsNullOrWhiteSpace(email)) return Task.FromResult<UserDto?>(null);
+
         return mapper.ProjectTo<UserDto>(userRepo.Get())
             .SingleOrDefaultAsync(u => u.Email == email);
     }
 
-    public bool PasswordIsCorrect(UserDto? user, string passwordAttempt)
+    public bool PasswordIsCorrect(UserDto? user, string? passwordAttempt)
     {
         if (user == null || string.IsNullOrEmpty(passwordAttempt)) return false;
 

@@ -1,4 +1,5 @@
 ﻿using BeyondComputersNi.Blazor.Components;
+using BeyondComputersNi.Blazor.Extensions;
 using BeyondComputersNi.Blazor.Interfaces;
 using BeyondComputersNi.Blazor.ViewModels.Build;
 using Microsoft.AspNetCore.Components;
@@ -47,6 +48,11 @@ public partial class BuildFinish : Form
         InitializeForm(BuildFinishViewModel);
 
         LoadingForm = false;
+    }
+
+    private void OnLoginButtonClicked()
+    {
+        NavigationManager?.NavigateTo(NavigationManager.LoginUrlWithRedirect());
     }
 
     protected async override void OnValidSubmit(EditContext context)
